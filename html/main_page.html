@@ -6,42 +6,27 @@
     <link rel="stylesheet" href="../css/bootstrap/dist/css/bootstrap.css">
     <!--<link rel="stylesheet" type="text/css" href="../css/interface.css">-->
     <script type="text/javascript" src="../js/interfaceJenkins.js"></script>
+    <script type="text/javascript" src="../js/functionFillTab.js"></script>
+    <script type="text/javascript" src="../js/scriptTestGetPage.js"></script>
   </head>
   <body>
     <div>
+      <img src="../ressources/CODEEN-small.png" class="align-left">
+    </div>
+    <div>
       <table class="table table-bordered table-striped table-condensed" id="MainTable">
-	<tr>
-	  <td><h3>Project</h3></td>
-	  <td><h3>Stability</h3></td>
-	  <td><h3>Test</h3></td>
-	  <td><h3>Documentation</h3></td>
-	  <td><h3>Svn / Git</h3></td>
-	  <td><h3>Quality</h3></td>
-	</tr>
-	<tr>
-	  <td id="text-center-left">Project_Name</td>
-	  <td class="text-center"><img src="../ressources/sunny.svg" width="50px" height="50px"></td>
-	  <td></td>
-	  <td class="text-center"><img src="../ressources/file.svg"  width="50px" height="50px"></td>
-	  <td class="text-center"><img src="../ressources/github-logo.svg"  width="50px" height="50px"></td>
-	  <td class="text-center"><h4><strong>A</strong></h4></td>
-	</tr>
-	<tr>
-	  <td id="text-center-left">Project_Name2</td>
-	  <td class="text-center"><img src="../ressources/cloud.svg" width="50px" height="50px"></td>
-	  <td></td>
-	  <td class="text-center"><img src="../ressources/file.svg"  width="50px" height="50px"></td>
-	  <td class="text-center"><img src="../ressources/github-logo.svg"  width="50px" height="50px"></td>
-	  <td class="text-center"><h4><strong>B</strong></h4></td>
-	</tr>
-	<tr>
-	  <td id="text-center-left">Project_Name3</td>
-	  <td class="text-center"><img src="../ressources/cloud-light.svg" width="50px" height="50px"></td>
-	  <td></td>
-	  <td class="text-center"><img src="../ressources/file.svg"  width="50px" height="50px"></td>
-	  <td class="text-center"><img src="../ressources/github-logo.svg"  width="50px" height="50px"></td>
-	  <td class="text-center"><h4><strong>F</strong></h4></td>
-	</tr>
+        <thead>
+          <tr>
+	          <td><h3>Project</h3></td>
+	          <td><h3>Stability</h3></td>
+	          <td><h3>Test</h3></td>
+	          <td><h3>Documentation</h3></td>
+            <td><h3>Svn / Git</h3></td>
+            <td><h3>Quality</h3></td>
+	        </tr>
+        </thead>
+        <tbody id="MainTableBody">
+        </tbody>
       </table>
     </div>
   </body>
