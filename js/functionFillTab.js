@@ -2,7 +2,7 @@
 ** JavaScript File
 ** Name : interfaceJenkins.js
 ** Start by: Alban Meurice
-** 08/12/2016
+** 22/12/2016
 */
 
 
@@ -33,6 +33,12 @@ function rowl(balise) {
           cell = line.insertCell(1);
           cell = line.insertCell(2);
           cell = line.insertCell(3);
+          //
+          var img = getDocumentation(projectSelected[j]).onload;
+          alert(img);
+          cell.appendChild(img);
+          //cell.innerHTML += img;
+          //
           cell = line.insertCell(4);
           cell = line.insertCell(5);
         }
@@ -48,7 +54,7 @@ function rowl(balise) {
   }
 
 /*
-** The next Function is use for get all the projects with their name start with the initial letters precise with "headIdentity"
+** The next Function is use for get all the projects with their name start with the initial letter precise with "headIdentity"
 */
 
 function selectProjectCat(headIdentity) {
