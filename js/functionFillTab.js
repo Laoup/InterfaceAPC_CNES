@@ -1,6 +1,6 @@
 /*
 ** JavaScript File
-** Name : interfaceJenkins.js
+** Name : functionFillTab.js
 ** Start by: Alban Meurice
 ** 22/12/2016
 */
@@ -20,6 +20,7 @@ function rowl(balise) {
   while (balise.parentNode.parentNode !== childTabHtml[i])
     i = i + 1;
   var nb = 0;
+//  alert(tabHtml.childNodes);
   if ((nb = document.getElementsByName(childTabHtml[i].textContent).length) == 0)
     {
       var projectSelected = selectProjectCat(childTabHtml[i].textContent)
@@ -31,16 +32,14 @@ function rowl(balise) {
           var cell = line.insertCell(0);
           cell.innerHTML += projectSelected[j];
           cell = line.insertCell(1);
+          getHealth(projectSelected[j], cell);
           cell = line.insertCell(2);
+          getTestResult(projectSelected[j], cell);
           cell = line.insertCell(3);
-          //
-          var img = getDocumentation(projectSelected[j]).onload;
-          alert(img);
-          cell.appendChild(img);
-          //cell.innerHTML += img;
-          //
+          getDocumentation(projectSelected[j], cell);
           cell = line.insertCell(4);
-          cell = line.insertCell(5);
+          var cellSonar = line.insertCell(5);
+          getRepository(projectSelected[j], cell, cellSonar);
         }
     }
   else
@@ -67,4 +66,22 @@ function selectProjectCat(headIdentity) {
       projects.push(window.tabName[i].textContent);
   }
   return projects;
+}
+
+function getTestResult(nameProject, cell) {
+
+  var i = 0;
+  var img = document.createElement('img');
+  while (window.tabName[i].textContent != nameProject)
+    i++;
+  if (window.tabColor[i].textContent == "blue")
+    img.setAttribute('src', '../ressources/blue.png');
+  if (window.tabColor[i].textContent == "red")
+    img.setAttribute('src', '../ressources/red.png');
+  if (window.tabColor[i].textContent == "notbuilt")
+    img.setAttribute('src', '../ressources/grey.png');
+  img.setAttribute('class', 'center-block');
+  img.setAttribute('width', '25px');
+  img.setAttribute('height', '25px');
+  cell.appendChild(img);
 }

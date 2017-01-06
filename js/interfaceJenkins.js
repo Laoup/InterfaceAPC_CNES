@@ -22,6 +22,7 @@ xhr.onreadystatechange = function() {
     if (xhr.status === 200) {
 
       window.tabName = xhr.responseXML.querySelectorAll('name');
+      window.tabColor = xhr.responseXML.querySelectorAll('color');
 
       /*
       ** The function fillTab get the array with all the initial letters and
