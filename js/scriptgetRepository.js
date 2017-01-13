@@ -20,7 +20,7 @@ function getRepository(projectName, cell, cellSonar) {
     }
   };
 
-  var urlDoc = "https://apceuclidjks2.in2p3.fr/jenkins/job/";
+  var urlDoc = window.addrServeur + "jenkins/job/";
   urlDoc += projectName + "/api/xml";
   xhr4.open("GET", urlDoc);
   xhr4.send();
@@ -66,7 +66,7 @@ function getRepository(projectName, cell, cellSonar) {
 
     if (numberBuild != null)
       {
-        var urlBuildProject = "https://apceuclidjks2.in2p3.fr/jenkins/job/";
+        var urlBuildProject = window.addrServeur + "jenkins/job/";
         urlBuildProject += projectName + "/" + numberBuild.textContent + "/api/xml";
         xhr5.open("GET", urlBuildProject);
         xhr5.send();

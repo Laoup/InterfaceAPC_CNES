@@ -44,7 +44,7 @@ function getDocumentation(projectName, cell) {
     }
   };
 
-  var urlDoc = "https://apceuclidjks2.in2p3.fr/jenkins/job/";
+  var urlDoc = window.addrServeur + "jenkins/job/";
   urlDoc += projectName + '/' + 'doxygen' + '/';
 
   xhr2.open("GET", urlDoc);

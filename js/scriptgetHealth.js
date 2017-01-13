@@ -20,9 +20,7 @@ function getHealth(projectName, cell) {
       if (xhr3.status === 200) {
 
         var img = document.createElement('img');
-        //console.log(window.numberBuild.textContent + ": " + projectName);
         var healthInfo = xhr3.responseXML.querySelector("score") !== null;
-        //alert(healthInfo);
         if (healthInfo == true)
           {
             var healthInfo = xhr3.responseXML.querySelector("score").textContent;
@@ -47,7 +45,7 @@ function getHealth(projectName, cell) {
     }
   };
 
-  var urlDoc = "https://apceuclidjks2.in2p3.fr/jenkins/job/";
+  var urlDoc = window.addrServeur + "jenkins/job/";
   urlDoc += projectName + "/api/xml";
   xhr3.open("GET", urlDoc);
   xhr3.send();

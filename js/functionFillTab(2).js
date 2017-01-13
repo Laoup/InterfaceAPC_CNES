@@ -23,26 +23,30 @@ function rowl(balise) {
 //  alert(tabHtml.childNodes);
   if ((nb = document.getElementsByName(childTabHtml[i].textContent).length) == 0)
     {
-      var projectSelected = selectProjectCat(childTabHtml[i].textContent)
-      for (var j = 0; j < projectSelected.length; j++)
+      //var projectSelected = selectProjectCat(childTabHtml[i].textContent)
+      //for (var j = 0; j < projectSelected.length; j++)
+      var j = 0;
+      var checkCell = "";
+      do
         {
           var line = tabHtml.insertRow(i);
           line.setAttribute("class", "info");
           line.setAttribute("name", childTabHtml[i].textContent);
           var cell = line.insertCell(0);
-          /*if (cell.innerHTML == "")
-            alert("hoy");*/
-          cell.innerHTML += projectSelected[j];
+          selectProjectCat(childTabHtml[i].textContent, cell, j)
+          checkCell = cell.innerHTML;
+          //cell.innerHTML += projectSelected[j].nameProject;
+          //console.log(projectSelected[j].nameProject);
           cell = line.insertCell(1);
-          getHealth(projectSelected[j], cell);
+          //getHealth(projectSelected[j], cell);
           cell = line.insertCell(2);
-          getTestResult(projectSelected[j], cell);
+          //getTestResult(projectSelected[j], cell);
           cell = line.insertCell(3);
-          getDocumentation(projectSelected[j], cell);
+          //getDocumentation(projectSelected[j], cell);
           cell = line.insertCell(4);
           var cellSonar = line.insertCell(5);
-          getRepository(projectSelected[j], cell, cellSonar);
-        }
+          //getRepository(projectSelected[j], cell, cellSonar);
+        } while (checkCell != "")
     }
   else
     {
@@ -58,16 +62,27 @@ function rowl(balise) {
 ** The next Function is use for get all the projects with their name start with the initial letter precise with "headIdentity"
 */
 
-function selectProjectCat(headIdentity) {
+function selectProjectCat(headIdentity, cell, line) {
 
-  var projects = new Array();
+  //var projects = new Array();
+  var x = 0;
   for (var i = 0; i < window.tabName.length; i++)
   {
     var project = window.tabName[i].textContent.substring(0, window.tabName[i].textContent.indexOf('_'));
     if (project == headIdentity)
-      projects.push(window.tabName[i].textContent);
+      {
+        //x = x + 1;
+        if (x == line)
+          {
+            //var objProject = new Object();
+            getUpProject(/*objProject, */i, cell);
+            //projects.push(objProject);
+          }
+        x = x + 1;
+      }
   }
-  return projects;
+
+  //return projects;
 }
 
 function getTestResult(nameProject, cell) {
