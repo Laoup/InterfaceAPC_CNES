@@ -14,6 +14,7 @@
 
 function getDocumentation(projectName, cell) {
 
+  console.log("If tou don't see me it's because i'm useless");
   var xhr2 = new XMLHttpRequest();
 
   xhr2.onreadystatechange = function() {

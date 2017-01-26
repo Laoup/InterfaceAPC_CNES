@@ -3,35 +3,38 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<script src="../css/bootstrap/dist/js/bootstrap.js"></script>-->
     <link rel="stylesheet" href="../css/bootstrap/dist/css/bootstrap.css">
     <!--<link rel="stylesheet" type="text/css" href="../css/interface.css">-->
     <script type="text/javascript" src="../js/objectDefinition.js"></script>
-    <script type="text/javascript" src="../js/interfaceJenkins(2).js"></script>
-    <script type="text/javascript" src="../js/functionFillTab(2).js"></script>
+    <script type="text/javascript" src="../js/interfaceJenkins.js"></script>
+    <script type="text/javascript" src="../js/functionFillTab.js"></script>
     <script type="text/javascript" src="../js/scriptTestGetPage.js"></script>
-    <script type="text/javascript" src="../js/scriptgetHealth(2).js"></script>
-    <!--<script type="text/javascript" src="../js/scriptgetRepository.js"></script>-->
-    <!--<script type="text/javascript" src="../js/scriptgetUpProject.js"></script>-->
+    <script type="text/javascript" src="../js/scriptGetAndSet.js"></script>
   </head>
   <body>
     <div>
       <img src="../ressources/CODEEN-small.png" class="align-left">
     </div>
-    <div>
+    <div id="MainTableDiv">
       <table class="table table-bordered table-striped table-condensed" id="MainTable">
         <thead>
           <tr>
-	          <td><h3>Project</h3></td>
-	          <td><h3>Stability</h3></td>
-	          <td><h3>Build</h3></td>
-	          <td><h3>Documentation</h3></td>
-            <td><h3>Svn / Git</h3></td>
-            <td><h3>Quality</h3></td>
+	          <th class="col-md-2"><h3>Project</h3></td>
+	          <th class="col-md-1"><h3>Stability</h3></td>
+	          <th class="col-md-1"><h3>Build</h3></td>
+            <th class="col-md-1"><h3>Test</h3></td>
+	          <th class="col-md-1"><h3>Documentation</h3></td>
+            <th class="col-md-1"><h3>Svn / Git</h3></td>
+            <th class="col-md-1"><h3>Quality</h3></td>
 	        </tr>
         </thead>
         <tbody id="MainTableBody">
         </tbody>
       </table>
     </div>
+    <!-- The two next script maybe useless it's for test the navigator read better the page-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../css/bootstrap/dist/js/bootstrap.js"></script>
   </body>
 </html>
