@@ -1,1 +1,5 @@
-Serveur=apceucliddev.in2p3.fr
+<?xml version="1.0" encoding="UTF-8"?>
+<Content>
+  <Serveur>https://apceucliddev.in2p3.fr/</Serveur>
+  <Documentation></Documentation>
+</Content>

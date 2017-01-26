@@ -7,10 +7,19 @@
 
 
 var xhrInit = new XMLHttpRequest();
+//var xhrInit2 = new XMLHttpRequest();
 window.tabName = null;
 
+//xhrInit2.open("POST", "https://cas.cosmos.esa.int/cas/login?service=http%3A%2F%2Fcodeen.euclid-ec.org%2Fjenkins%2FsecurityRealm%2FfinishLogin", false);
+//xhrInit2.send();
 xhrInit.open("GET", "../ressources/configFile.xml")
 xhrInit.send();
+
+/*xhrInit2.onreadystatechange = function() {
+  console.log(xhrInit2.readyState);
+  if (xhrInit2.readyState === 4)
+    console.log(xhrInit2.status);
+}*/
 
 xhrInit.onreadystatechange = function() {
   if (xhrInit.readyState === 4) {
@@ -22,8 +31,8 @@ xhrInit.onreadystatechange = function() {
       /*
       ** This next functions supervise the status of the XMLHttpRequest.
       ** When the status of the request is equal at 200 (Finish and Ok) the functions get
-      ** the name of all project register in Jenkins and they set the table with the
       ** initial letters for each sections ex: CT, EXT, PF..etc.
+      ** the name of all project register in Jenkins and they set the table with the
       */
 
       xhr.onreadystatechange = function() {
@@ -96,8 +105,9 @@ xhrInit.onreadystatechange = function() {
             }
           };
 
-          //xhr.open("GET",window.addrServeur + "jenkins/api/xml");
-          xhr.open("GET", "https://apceucliddev.in2p3.fr/jenkins/api/xml");
+          xhr.open("GET",window.addrServeur + "jenkins/api/xml");
+          //xhr.open("GET", "https://apceucliddev.in2p3.fr/jenkins/api/xml", true, "mdetourn", "Y1EFww1PpSNbY");
+          //xhr.open("POST", "https://apceucliddev.in2p3.fr/jenkins/api/xml", true, "mdetourn", );
           console.log(window.addrServeur + "jenkins/api/xml");
           xhr.send();
         }
