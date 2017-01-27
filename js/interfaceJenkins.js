@@ -6,18 +6,27 @@
 */
 
 
-var xhrInit = new XMLHttpRequest();
+//var xhrInit = new XMLHttpRequest();
 window.tabProjects = new Array();
 
-xhrInit.open("GET", "../ressources/configFile.xml")
-xhrInit.send();
+window.onload = function() {
 
-xhrInit.open("GET", "../ressources/configFile.xml")
-xhrInit.send();
+  var loadingIconeTarget = document.getElementById("MainTableDiv");
+  var loadingIcone = document.createElement("h2");
+  loadingIcone.innerHTML = "Wait few seconds please. the Jenkins server information is loading";
+  loadingIcone.setAttribute("id", "loadingIcone");
+  loadingIcone.setAttribute("class", "text-center");
+  loadingIconeTarget.appendChild(loadingIcone);
+};
 
-xhrInit.onreadystatechange = function() {
-  if (xhrInit.readyState === 4) {
-    if (xhrInit.status === 200) {
+//xhrInit.open("GET", "../ressources/configFile.xml")
+//xhrInit.send();
+
+
+
+//xhrInit.onreadystatechange = function() {
+//  if (xhrInit.readyState === 4) {
+//    if (xhrInit.status === 200) {
 
       var xhr = new XMLHttpRequest();
 
@@ -31,15 +40,6 @@ xhrInit.onreadystatechange = function() {
 
             var tabName = xhr.responseXML.querySelectorAll('name');
             var tabColor = xhr.responseXML.querySelectorAll('color');
-
-            var loadingIconeTarget = document.getElementById("MainTableDiv");
-            var loadingIcone = document.createElement("img");
-            loadingIcone.setAttribute("id", "loadingIcone");
-            loadingIcone.setAttribute("class", "center-block");
-            loadingIcone.setAttribute("src", "../ressources/ajax-loader.gif");
-            loadingIcone.setAttribute("width", "50px");
-            loadingIcone.setAttribute("height", "50px");
-            loadingIconeTarget.appendChild(loadingIcone);
 
             getAllOU(tabName);
 
@@ -82,9 +82,9 @@ xhrInit.onreadystatechange = function() {
           }
         }
       };
-    }
-  }
-};
+    //}
+  //}
+//};
 
 function identifyCategory(project) {
 
