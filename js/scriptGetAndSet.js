@@ -97,7 +97,7 @@ function getImageDocumentation(cell, project)
   };
 
   //var urlDoc = window.addrServeur + "jenkins/job/";
-  var urlDoc = "https://apceuclidjks2.in2p3.fr/jenkins/job/";
+  var urlDoc = window.addrServer + "jenkins/job/";
   urlDoc += project.nameProject + '/doxygen/';
   //console.log("for : " + project.nameProject + " url is : " + urlDoc);
 
@@ -113,7 +113,7 @@ function getRepository(project, cell, cellSonar) {
   if (project.numberBuild != null)
     {
       //var urlBuildProject = window.addrServeur + "jenkins/job/";
-      var urlBuildProject = "https://apceuclidjks2.in2p3.fr/jenkins/job/";
+      var urlBuildProject = window.addrServer + "jenkins/job/";
       urlBuildProject += project.nameProject + "/" + project.numberBuild + "/api/xml";
       xhr4.withCredentials = true;
       xhr4.open("GET", urlBuildProject);
@@ -178,7 +178,7 @@ function getTestResult(cell, project) {
 
   var xhr5 = new XMLHttpRequest();
 
-  var urlTest = "https://apceuclidjks2.in2p3.fr/jenkins/job/";
+  var urlTest = window.addrServer + "jenkins/job/";
   urlTest += project.nameProject + "/" + project.numberBuild + "/testReport/api/xml";
   xhr5.withCredentials = true;
   xhr5.open("GET", urlTest);
@@ -188,14 +188,16 @@ function getTestResult(cell, project) {
     if (xhr5.readyState === 4) {
       if (xhr5.status === 200) {
 
-        var numberFail = parseInt(xhr5.responseXML.querySelector("failCount").textContent);
-        var numberPass = parseInt(xhr5.responseXML.querySelector("passCount").textContent);
-        var numberSkip = parseInt(xhr5.responseXML.querySelector("skipCount").textContent);
-        var numberTotalTest = numberFail + numberPass + numberSkip;
-        var baliseText = document.createElement("p");
-        baliseText.innerHTML = numberPass + " / " + numberTotalTest;
-        baliseText.setAttribute("class", "text-center");
-        cell.appendChild(baliseText);
+        var baliseImg = document.createElement("img");
+        var baliseRef = document.createElement("a");
+        baliseImg.setAttribute("src", "../ressources/Report.jpg");
+        baliseImg.setAttribute("class", "center-block");
+        baliseImg.setAttribute("width", "25px");
+        baliseImg.setAttribute("height", "25px");
+        urlTest = urlTest.replace("/api/xml", "");
+        baliseRef.setAttribute("href", urlTest);
+        baliseRef.appendChild(baliseImg);
+        cell.appendChild(baliseRef);
       }
     }
   };

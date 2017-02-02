@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Content>
-  <Serveur>https://apceuclidjks2.in2p3.fr/</Serveur>
-  <Serveur2>https://apceucliddev.in2p3.fr/</Serveur2>   
+  <Server>https://apceuclidjks2.in2p3.fr/</Server>
+  <Server2>https://apceucliddev.in2p3.fr/</Server2>   
   <keyPass></keyPass>
   <login>mdetourn</login>
   <Documentation>https://apceuclidapp.in2p3.fr</Documentation>

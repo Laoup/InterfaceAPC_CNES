@@ -6,11 +6,12 @@
 */
 
 
-//var xhrInit = new XMLHttpRequest();
+var xhrInit = new XMLHttpRequest();
 window.tabProjects = new Array();
 
 window.onload = function() {
 
+  console.log(window.addrServer);
   var loadingIconeTarget = document.getElementById("MainTableDiv");
   var loadingIcone = document.createElement("h2");
   loadingIcone.innerHTML = "Wait few seconds please. the Jenkins server information is loading";
@@ -19,19 +20,21 @@ window.onload = function() {
   loadingIconeTarget.appendChild(loadingIcone);
 };
 
-//xhrInit.open("GET", "../ressources/configFile.xml")
-//xhrInit.send();
+xhrInit.open("GET", "../ressources/configFile.xml")
+xhrInit.send();
 
 
 
-//xhrInit.onreadystatechange = function() {
-//  if (xhrInit.readyState === 4) {
-//    if (xhrInit.status === 200) {
+xhrInit.onreadystatechange = function() {
+  if (xhrInit.readyState === 4) {
+    if (xhrInit.status === 200) {
+
+      window.addrServer = xhrInit.responseXML.querySelector("Server").textContent;
 
       var xhr = new XMLHttpRequest();
 
       xhr.withCredentials = true;
-      xhr.open("GET", "https://apceuclidjks2.in2p3.fr/jenkins/api/xml");
+      xhr.open("GET", window.addrServer + "jenkins/api/xml");
       xhr.send();
 
       xhr.onreadystatechange = function() {
@@ -41,50 +44,55 @@ window.onload = function() {
             var tabName = xhr.responseXML.querySelectorAll('name');
             var tabColor = xhr.responseXML.querySelectorAll('color');
 
-            getAllOU(tabName);
-
             function getAllOU(tabName) {
 
               var i = 0;
+              //var j = 0;
+              //var tabSubBuild = new Array();
 
               for (i = 0; i < tabName.length; i++)
+              {
+                var xhr2 = new XMLHttpRequest();
+                var urlProj = window.addrServer + "jenkins/job/" + tabName[i].textContent + "/api/xml";
+
+                xhr2.withCredentials = true;
+                xhr2.open("GET", urlProj, false);
+                xhr2.send();
+
+                //var check = xhr2.responseXML.querySelector("subBuild").textContent;
+                //if (check !== null)
+                if (xhr2.responseXML != null)
                 {
-                  var xhr2 = new XMLHttpRequest();
-                  var urlProj = "https://apceuclidjks2.in2p3.fr/jenkins/job/" + tabName[i].textContent + "/api/xml";
-
-                  xhr2.withCredentials = true;
-                  xhr2.open("GET", urlProj, false);
-                  xhr2.send();
-
-                  //var check = xhr2.responseXML.querySelector("subBuild").textContent;
-                  //if (check !== null)
-                  if (xhr2.responseXML != null)
-                    {
-                      if (xhr2.responseXML.querySelector("upstreamProject") == null)
-                      {
-                        //var project = new MainProject(xhr2.responseXML.querySelector("name").textContent);
-                        var project = new MainProject(tabName[i].textContent);
-                        project.category = identifyCategory(project);
-                        project.health = gethealthMain(xhr2);
-                        project.numberBuild = getNumberBuild(xhr2);
-                        project.color = tabColor[i].textContent;
-                        window.tabProjects.push(project);
-                      }
-                    }
+                  if (xhr2.responseXML.querySelector("upstreamProject") == null)
+                  {
+                    //xhr2.responseXML.querySelectorAll("jobName");
+                    //while ()
+                    var project = new MainProject(tabName[i].textContent);
+                    project.category = identifyCategory(project);
+                    project.health = gethealthMain(xhr2);
+                    project.numberBuild = getNumberBuild(xhr2);
+                    project.color = tabColor[i].textContent;
+                    window.tabProjects.push(project);
+                  }
                 }
+              }
+              var category = findCategory();
+              fillTab(category);
             }
+            getAllOU(tabName);
+
 
             //window.onload = function() {
 
-              var category = findCategory();
-              fillTab(category);
+              //var category = findCategory();
+              //fillTab(category);
             //}
           }
         }
       };
-    //}
-  //}
-//};
+    }
+  }
+};
 
 function identifyCategory(project) {
 
