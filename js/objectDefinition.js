@@ -5,6 +5,10 @@
 ** 13/01/2017
 */
 
+/*
+** Here is declared the object "MainProject". It's use for stock information
+** about a Project.
+*/
 
 function MainProject(nameProject) {
   this.nameProject = nameProject;

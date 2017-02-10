@@ -6,27 +6,31 @@
 */
 
 
+/*
+** The following code is not put into a function is use for put the wait message during the loading
+** of the page. It's also use for get the config parameters like the name of the Jenkins server.
+*/
+
 var xhrInit = new XMLHttpRequest();
 window.tabProjects = new Array();
 window.FuncOL = new Array();
 
-//function waitMessage() {
 
-  //console.log(window.addrServer);
-  var loadingIconeTarget = document.getElementById("MainTableDiv");
-  var loadingIcone = document.createElement("h2");
-  loadingIcone.innerHTML = "Wait few seconds please. the Jenkins server information is loading";
-  loadingIcone.setAttribute("id", "loadingIcone");
-  loadingIcone.setAttribute("class", "text-center");
-  loadingIconeTarget.appendChild(loadingIcone);
-//};
-
-//StkFunc(waitMessage);
+var loadingIconeTarget = document.getElementById("MainTableDiv");
+var loadingIcone = document.createElement("h2");
+loadingIcone.innerHTML = "Wait few seconds please. the Jenkins server information is loading";
+loadingIcone.setAttribute("id", "loadingIcone");
+loadingIcone.setAttribute("class", "text-center");
+loadingIconeTarget.appendChild(loadingIcone);
 
 xhrInit.open("GET", "../ressources/configFile.xml")
 xhrInit.send();
 
-
+/*
+** The following code is use for prepare and use the request needed for get the Jenkins information.
+** The function getALLOU is use for put the projects into a table of MainProject and get information
+** about their status.
+*/
 
 xhrInit.onreadystatechange = function() {
   if (xhrInit.readyState === 4) {
@@ -64,8 +68,6 @@ xhrInit.onreadystatechange = function() {
                     xhr2.open("GET", urlProj, false);
                     xhr2.send();
 
-                    //var check = xhr2.responseXML.querySelector("subBuild").textContent;
-                    //if (check !== null)
                     if (xhr2.responseXML != null)
                       {
                         j = 0;
@@ -76,7 +78,6 @@ xhrInit.onreadystatechange = function() {
                               {
                                 if (tabSubBuild.indexOf(tabSubJob[j].textContent) == -1)
                                   {
-                                    //console.log(tabSubJob[j]);
                                     tabSubBuild.push(tabSubJob[j].textContent);
                                   }
                                 j = j + 1;
@@ -88,12 +89,10 @@ xhrInit.onreadystatechange = function() {
                             project.color = tabColor[i].textContent;
                             window.tabProjects.push(project);
                           }
-                        }
                       }
+                    }
+                  }
               }
-              //var category = findCategory();
-              //fillTab(category);
-            }
             getAllOU(tabName);
 
             function fillAll() {
@@ -112,11 +111,19 @@ xhrInit.onreadystatechange = function() {
   }
 };
 
+/*
+** The next Function is used for determine the category of one project.
+*/
+
 function identifyCategory(project) {
 
   if (project.nameProject.indexOf('_') != -1)
     return project.nameProject.substring(0, project.nameProject.indexOf('_'));
 }
+
+/*
+** The next function is used for find the different categories present in the dashboard.
+*/
 
 function findCategory() {
 
@@ -159,6 +166,11 @@ function fillTab(category) {
       cellLineCat = lineCat.insertCell(6);
     }
 }
+
+/*
+** The two next functions is used for remplace the utiisation of window.onload
+** more information at "http://babylon-design.com/eviter-conflit-javascript-window-onload/"
+*/
 
 function StkFunc(func)
 {

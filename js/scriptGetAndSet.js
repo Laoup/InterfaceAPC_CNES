@@ -7,8 +7,7 @@
 
 
 /*
-** The function getHealth get the state of health for a project and
-** she create an insert an image for illustrate the state of health of project.
+** The function getHealthMain get the score of health for a project.
 */
 
 function gethealthMain(xhr) {
@@ -20,6 +19,11 @@ function gethealthMain(xhr) {
       return (healthInfo);
     }
 }
+
+/*
+** The function setImageHealth get the state of health for a project and
+** she create an insert an image for illustrate the state of health of project.
+*/
 
 function setImageHealth(cell, project)
 {
@@ -46,6 +50,10 @@ function setImageHealth(cell, project)
   cell.appendChild(img);
 }
 
+/*
+** The next Function set a image with different color in terms of the status of build.
+*/
+
 function setImageBuildResult(cell, project)
 {
   var img = document.createElement('img');
@@ -60,6 +68,11 @@ function setImageBuildResult(cell, project)
   img.setAttribute('height', '25px');
   cell.appendChild(img);
 }
+
+/*
+** The next function test if a documentation exist for the Project.
+** If a Documentation exist the function create an image with link to the documentation for the project.
+*/
 
 function getImageDocumentation(cell, project)
 {
@@ -96,15 +109,18 @@ function getImageDocumentation(cell, project)
     }
   };
 
-  //var urlDoc = window.addrServeur + "jenkins/job/";
   var urlDoc = window.addrServer + "jenkins/job/";
   urlDoc += project.nameProject + '/doxygen/';
-  //console.log("for : " + project.nameProject + " url is : " + urlDoc);
 
   xhr3.withCredentials = true;
   xhr3.open("GET", urlDoc);
   xhr3.send();
 }
+
+/*
+** The next function test if a Repository or/and SonarQube exist for the Project.
+** If repository or/and SonarQube exist the function create an image for each of them with the link for go to the page.
+*/
 
 function getRepository(project, cell, cellSonar) {
 
@@ -112,7 +128,6 @@ function getRepository(project, cell, cellSonar) {
 
   if (project.numberBuild != null)
     {
-      //var urlBuildProject = window.addrServeur + "jenkins/job/";
       var urlBuildProject = window.addrServer + "jenkins/job/";
       urlBuildProject += project.nameProject + "/" + project.numberBuild + "/api/xml";
       xhr4.withCredentials = true;
@@ -130,8 +145,6 @@ function getRepository(project, cell, cellSonar) {
           if (typeRepo != null)
             {
               var urlRepo = xhr4.responseXML.querySelector("module");
-              /*var img = document.createElement('img');
-              var linkA = document.createElement('a');*/
               if (urlRepo != null)
                 {
                   if (typeRepo.textContent == "svn")
@@ -153,8 +166,6 @@ function getRepository(project, cell, cellSonar) {
               img.setAttribute("class", "center-block");
               img.setAttribute("width", "25px");
               img.setAttribute("height", "25px");
-              //var link = "location.href=\'" + sonarResult.textContent + "\'";
-              //img.setAttribute("onclick", link);
               linkA.setAttribute("href", sonarResult.textContent);
               linkA.appendChild(img);
               cellSonar.appendChild(linkA);
@@ -163,6 +174,11 @@ function getRepository(project, cell, cellSonar) {
       }
     };
   }
+
+/*
+** This function get the number of the build for a project
+*/
+
 
 function getNumberBuild(xhr) {
 
@@ -173,6 +189,11 @@ function getNumberBuild(xhr) {
       return (number);
     }
 }
+
+/*
+** This function get the Test result page for a project if the Tests result page exist.
+** If a Page with the result of test exist the function create an image with the link of the page for the project.
+*/
 
 function getTestResult(cell, project) {
 

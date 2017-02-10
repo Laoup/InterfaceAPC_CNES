@@ -5,6 +5,11 @@
 ** 22/12/2016
 */
 
+/*
+** The function rowl manage the appear of the plus and minus logo.
+** Her manage also the display of information about each project and the display of the
+** projects themselves.
+*/
 
 function rowl(balise) {
 

@@ -6755,3 +6755,25 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+footer {
+  position: absolute fixed;
+  width: 100%;
+  bottom: 0px;
+  background: #565656;
+  color: black;
+
+  padding: 40px 0 10px;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.img-header {
+  margin-bottom: 2%;
+}
+
+#MainTableDiv {
+  margin-bottom: 100px;
+}
