@@ -12,7 +12,8 @@
 */
 
 var xhrInit = new XMLHttpRequest();
-window.tabProjects = new Array();
+/*window.tabProjects = new Array();*/
+window.projectsHandler = new projectHandler();
 window.FuncOL = new Array();
 
 
@@ -41,7 +42,7 @@ xhrInit.onreadystatechange = function() {
       var xhr = new XMLHttpRequest();
 
       xhr.withCredentials = true;
-      xhr.open("GET", window.addrServer + "jenkins/api/xml");
+      xhr.open("GET", window.addrServer + "jenkins/api/xml?tree=jobs[name,color]");
       xhr.send();
 
       xhr.onreadystatechange = function() {
@@ -51,18 +52,19 @@ xhrInit.onreadystatechange = function() {
             var tabName = xhr.responseXML.querySelectorAll('name');
             var tabColor = xhr.responseXML.querySelectorAll('color');
 
-            function getAllOU(tabName) {
+            function getAllOU(/*tabName*/) {
 
               var i = 0;
               var j = 0;
               var tabSubBuild = new Array();
+              var tabProjectsBranch = new Array();
 
               for (i = 0; i < tabName.length; i++)
               {
                 if (tabSubBuild.indexOf(tabName[i].textContent) == -1 && tabName[i].textContent != "All" && tabName[i].textContent != "Pilote")
                   {
                     var xhr2 = new XMLHttpRequest();
-                    var urlProj = window.addrServer + "jenkins/job/" + tabName[i].textContent + "/api/xml";
+                    var urlProj = window.addrServer + "jenkins/job/" + tabName[i].textContent + "/api/xml?tree=builds[subBuilds[jobName],number]{0},healthReport[score]{0}";
 
                     xhr2.withCredentials = true;
                     xhr2.open("GET", urlProj, false);
@@ -71,7 +73,8 @@ xhrInit.onreadystatechange = function() {
                     if (xhr2.responseXML != null)
                       {
                         j = 0;
-                        if (xhr2.responseXML.querySelector("upstreamProject") == null)
+                        //if (xhr2.responseXML.querySelector("upstreamProject") == null)
+                        if (xhr2.responseXML.querySelector("subBuild") != null)
                           {
                             var tabSubJob = xhr2.responseXML.querySelectorAll("jobName");
                             while (j < tabSubJob.length)
@@ -82,22 +85,25 @@ xhrInit.onreadystatechange = function() {
                                   }
                                 j = j + 1;
                               }
-                            var project = new MainProject(tabName[i].textContent);
-                            project.category = identifyCategory(project);
+                            var project = new Project(tabName[i].textContent);
+                            //project.category = identifyCategory(project);
                             project.health = gethealthMain(xhr2);
                             project.numberBuild = getNumberBuild(xhr2);
                             project.color = tabColor[i].textContent;
-                            window.tabProjects.push(project);
+                            window.projectsHandler.addProject(project);
+                            //tabProjectsBranch.push(project);
                           }
                       }
                     }
+
                   }
               }
             getAllOU(tabName);
 
             function fillAll() {
 
-              var category = findCategory();
+              //var category = findCategory();
+              var category
               fillTab(category);
             };
 

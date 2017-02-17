@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Content>
+  <Server2>https://cas.cosmos.esa.int/cas/login?service=https://apceuclidjks2.in2p3.fr/jenkins/securityRealm/finishLogin/</Server2>
   <Server>https://apceuclidjks2.in2p3.fr/</Server>
   <Server2>https://apceucliddev.in2p3.fr/</Server2>
   <keyPass></keyPass>
   <login>mdetourn</login>
-  <Documentation>https://apceuclidapp.in2p3.fr</Documentation>
+  <Documentation>https://apceuclidapp2.in2p3.fr</Documentation>
 </Content>

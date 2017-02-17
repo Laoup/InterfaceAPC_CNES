@@ -140,40 +140,47 @@ function getRepository(project, cell, cellSonar) {
         if (xhr4.status === 200) {
 
           var typeRepo = xhr4.responseXML.querySelector("kind");
-          var img = document.createElement('img');
+          var imgA = document.createElement('img');
+          var imgB = document.createElement('img');
           var linkA = document.createElement('a');
+          var linkB = document.createElement('a');
           if (typeRepo != null)
             {
-              var urlRepo = xhr4.responseXML.querySelector("module");
+              var urlRepo;
+              if (typeRepo.textContent == "svn")
+                urlRepo = xhr4.responseXML.querySelector("module");
+              else if (typeRepo.textContent == "git")
+                urlRepo = xhr4.responseXML.querySelector("remoteUrl");
               if (urlRepo != null)
                 {
                   if (typeRepo.textContent == "svn")
-                    img.setAttribute("src", "../ressources/svn.png");
+                    imgA.setAttribute("src", "../ressources/svn.png");
                   else if (typeRepo.textContent == "git")
-                    img.setAttribute("src", "../ressources/github-logo.svg");
-                  img.setAttribute("class", "center-block");
-                  img.setAttribute("width", "25px");
-                  img.setAttribute("height", "25px");
+                    imgA.setAttribute("src", "../ressources/github-logo.svg");
+                  imgA.setAttribute("class", "center-block");
+                  imgA.setAttribute("width", "25px");
+                  imgA.setAttribute("height", "25px");
                   linkA.setAttribute("href", urlRepo.textContent);
-                  linkA.appendChild(img);
+                  linkA.appendChild(imgA);
                   cell.appendChild(linkA);
                 }
             }
           sonarResult = xhr4.responseXML.querySelector("sonarqubeDashboardUrl");
           if (sonarResult != null)
             {
-              img.setAttribute("src", "../ressources/SonarQube.png");
-              img.setAttribute("class", "center-block");
-              img.setAttribute("width", "25px");
-              img.setAttribute("height", "25px");
-              linkA.setAttribute("href", sonarResult.textContent);
-              linkA.appendChild(img);
-              cellSonar.appendChild(linkA);
+              imgB.setAttribute("src", "../ressources/SonarQube.png");
+              imgB.setAttribute("class", "center-block");
+              imgB.setAttribute("width", "25px");
+              imgB.setAttribute("height", "25px");
+              linkB.setAttribute("href", sonarResult.textContent);
+              linkB.appendChild(imgB);
+              cellSonar.appendChild(linkB);
             }
         }
       }
     };
   }
+
 
 /*
 ** This function get the number of the build for a project

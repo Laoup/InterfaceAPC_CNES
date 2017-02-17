@@ -16,13 +16,14 @@ function rowl(balise) {
   var tabHtml = document.getElementById('MainTableBody');
   var childTabHtml = tabHtml.childNodes;
   var i = 0;
+  var j = 0;
   while (balise.parentNode.parentNode !== childTabHtml[i])
     i = i + 1;
   var nb = 0;
   if ((nb = document.getElementsByName(childTabHtml[i].textContent).length) == 0)
     {
       balise.src = "../ressources/moins.png"
-      for (var j = 0; j < window.tabProjects.length; j++)
+/*      for (j = 0; j < window.tabProjects.length; j++)
         {
           if (window.tabProjects[j].category == childTabHtml[i].textContent)
             {
@@ -43,7 +44,8 @@ function rowl(balise) {
               cellSonar = line.insertCell(6);
               getRepository(tabProjects[j], cell, cellSonar);
             }
-        }
+        }*/
+
     }
   else
     {
