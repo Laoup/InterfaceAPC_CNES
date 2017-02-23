@@ -110,7 +110,8 @@ function getImageDocumentation(cell, project)
   };
 
   var urlDoc = window.addrServer + "jenkins/job/";
-  urlDoc += project.nameProject + '/doxygen/';
+  urlDoc += project.fullNameProject + '/doxygen/';
+  //urlDoc += project.nameProject + '/doxygen/';
 
   xhr3.withCredentials = true;
   xhr3.open("GET", urlDoc);
@@ -129,7 +130,8 @@ function getRepository(project, cell, cellSonar) {
   if (project.numberBuild != null)
     {
       var urlBuildProject = window.addrServer + "jenkins/job/";
-      urlBuildProject += project.nameProject + "/" + project.numberBuild + "/api/xml";
+      //urlBuildProject += project.nameProject + "/" + project.numberBuild + "/api/xml";
+      urlBuildProject += project.fullNameProject + "/" + project.numberBuild + "/api/xml";
       xhr4.withCredentials = true;
       xhr4.open("GET", urlBuildProject);
       xhr4.send();
@@ -207,7 +209,8 @@ function getTestResult(cell, project) {
   var xhr5 = new XMLHttpRequest();
 
   var urlTest = window.addrServer + "jenkins/job/";
-  urlTest += project.nameProject + "/" + project.numberBuild + "/testReport/api/xml";
+  //urlTest += project.nameProject + "/" + project.numberBuild + "/testReport/api/xml";
+  urlTest += project.fullNameProject + "/" + project.numberBuild + "/testReport/api/xml";
   xhr5.withCredentials = true;
   xhr5.open("GET", urlTest);
   xhr5.send();

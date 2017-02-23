@@ -86,6 +86,13 @@ xhrInit.onreadystatechange = function() {
                                 j = j + 1;
                               }
                             var project = new Project(tabName[i].textContent);
+                            /*console.log("STOP !");
+                            console.log("------------------------------");
+                            console.log("Full name is : " + project.fullNameProject);
+                            console.log("nameMain is : " + project.nameMain);
+                            console.log("Category is : " + project.category);
+                            console.log("The version name is : " + project.nameVersion);
+                            console.log("------------------------------");*/
                             //project.category = identifyCategory(project);
                             project.health = gethealthMain(xhr2);
                             project.numberBuild = getNumberBuild(xhr2);
@@ -103,7 +110,8 @@ xhrInit.onreadystatechange = function() {
             function fillAll() {
 
               //var category = findCategory();
-              var category
+              var category = projectsHandler.getCategoryExist();
+              //projectsHandler.affAllMainProjects();
               fillTab(category);
             };
 
@@ -148,7 +156,7 @@ function findCategory() {
 function fillTab(category) {
 
   var tabHtml = document.getElementById('MainTableBody');
-  console.log(document.getElementById("loadingIcone"));
+  //console.log(document.getElementById("loadingIcone"));
   var loadingIcone = document.getElementById("loadingIcone");
   loadingIcone.parentNode.removeChild(loadingIcone);
 
@@ -161,7 +169,7 @@ function fillTab(category) {
       nImage.setAttribute("src", "../ressources/plus.png")
       nImage.setAttribute("width", "25px");
       nImage.setAttribute("height", "25px");
-      nImage.setAttribute("onClick", "rowl(this)");
+      nImage.setAttribute("onClick", "rowlCategory(this)");
       cellLineCat.innerHTML += category[l];
       cellLineCat.appendChild(nImage);
       cellLineCat = lineCat.insertCell(1);
