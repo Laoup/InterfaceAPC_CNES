@@ -67,7 +67,7 @@ function projectHandler() {
       var ctrl = 0;
 
       for (i = 0; i < this.listMainProjects.length && ctrl == 0; i++)
-        if (this.listMainProjects[i].nameProject == project.nameMain)
+        if (this.listMainProjects[i].nameProject == project.nameMain && this.listMainProjects[i].category == project.category)
           {
             //console.log("Normally it's the same main. The Main in the list is: " + this.listMainProjects[i].nameProject + "And the main of the project than i add is: " + project.nameMain);
             ctrl = 1;
@@ -123,14 +123,14 @@ function projectHandler() {
       return (namesMainProjects);
     };
 
-    this.getAllVersion = function(nameMain) {
+    this.getAllVersion = function(nameMain, category) {
 
       var i = 0;
       var tableVersion = [];
 
       for (i = 0; i < this.listMainProjects.length; i++)
         {
-          if (this.listMainProjects[i].nameProject == nameMain)
+          if (this.listMainProjects[i].nameProject == nameMain && this.listMainProjects[i].category == category)
             tableVersion = this.listMainProjects[i].listProjects;
         }
       return (tableVersion);
