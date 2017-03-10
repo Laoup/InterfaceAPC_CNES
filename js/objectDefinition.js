@@ -6,8 +6,9 @@
 */
 
 /*
-** Here is declared the object "MainProject". It's use for stock information
+** Here is declared the object "MainProject", "Project". It's use for stock information
 ** about a Project.
+** Another object "projectHandler" is the manager for add project or get information about him.
 */
 
 function Project(fullNameProject) {
@@ -17,6 +18,9 @@ function Project(fullNameProject) {
   this.category = null;
   this.nameSub = null;
   this.health = null;
+  this.healthDescription = null;
+  this.buildStability = null;
+  this.buildStabilityDescription = null;
   this.color = null;
   this.documentation = null;
   this.numberBuild = null;
@@ -29,8 +33,17 @@ function Project(fullNameProject) {
   console.log("During the creation, after step one the string Name is: " + fullNameProject);
   if (fullNameProject.indexOf('_') != -1)
     {
-      this.nameMain = fullNameProject.substring(0, fullNameProject.lastIndexOf('_'));
-      fullNameProject = fullNameProject.substring(fullNameProject.lastIndexOf('_') + 1);
+      if (fullNameProject.indexOf("BR") != -1)
+        {
+          this.nameMain = fullNameProject.substring(0, fullNameProject.indexOf("BR") - 1);
+          fullNameProject = fullNameProject.substring(fullNameProject.lastIndexOf("BR") + 3)
+
+        }
+      else
+        {
+          this.nameMain = fullNameProject.substring(0, fullNameProject.lastIndexOf('_'));
+          fullNameProject = fullNameProject.substring(fullNameProject.lastIndexOf('_') + 1);
+        }
     }
   this.nameVersion = fullNameProject;
 }
@@ -47,7 +60,6 @@ function MainProject(project) {
 }
 
 function projectHandler() {
-    //this.listMainProjects = new Array();
     this.listMainProjects = [];
 
     this.affAllMainProjects = function () {
@@ -69,20 +81,11 @@ function projectHandler() {
       for (i = 0; i < this.listMainProjects.length && ctrl == 0; i++)
         if (this.listMainProjects[i].nameProject == project.nameMain && this.listMainProjects[i].category == project.category)
           {
-            //console.log("Normally it's the same main. The Main in the list is: " + this.listMainProjects[i].nameProject + "And the main of the project than i add is: " + project.nameMain);
             ctrl = 1;
           }
 
       if (ctrl == 1)
         {
-          /*if (this.listMainProjects.length == 1)
-            {
-              console.log(this.listMainProjects[]);
-            }*/
-/*          console.log(project.fullNameProject);
-          console.log(i);
-          console.log(this.listMainProjects[0]);
-          console.log(this.listMainProjects[i - 1]);*/
           this.listMainProjects[i-1].addChildProject(project);
         }
       else
@@ -103,7 +106,6 @@ function projectHandler() {
             typeof window.tabProjects[i].category !== 'undefined' maybe useless*/)
               category.push(this.listMainProjects[i].category);
         }
-        //console.log("i / number of MainProjects = " + i);
       return (category);
     };
 
@@ -112,14 +114,11 @@ function projectHandler() {
       var i;
       var namesMainProjects = new Array();
 
-      console.log(category);
-      console.log(this.listMainProjects[1].category + "-> in the list");
       for (i = 0; i < this.listMainProjects.length; i++)
         {
           if (this.listMainProjects[i].category == category)
             namesMainProjects.push(this.listMainProjects[i].nameProject);
         }
-      console.log(namesMainProjects);
       return (namesMainProjects);
     };
 

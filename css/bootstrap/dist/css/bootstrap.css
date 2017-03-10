@@ -6,10 +6,12 @@
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
   font-family: sans-serif;
+  height: 100%;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
 body {
+  height: 100%;
   margin: 0;
 }
 article,
@@ -6757,9 +6759,8 @@ button.close {
 /*# sourceMappingURL=bootstrap.css.map */
 
 footer {
-  position: absolute fixed;
+  position: absolute;
   width: 100%;
-  bottom: 0px;
   background: #565656;
   color: black;
 
@@ -6774,6 +6775,69 @@ footer {
   margin-bottom: 2%;
 }
 
+
+
 #MainTableDiv {
   margin-bottom: 100px;
+  /*overflow: hidden;
+  height: 300px;
+  clear: both;*/
+}
+
+/*thead tr {
+  display: block;
+}
+
+thead tr th {
+  text-align:left;
+}
+
+tbody {
+  display: block;
+  height: 265px;
+  overflow: auto;
+}*/
+
+
+.info > td:first-child {
+  display: flex;
+  /*flex-direction: row;*/
+}
+
+.info > td:first-child > p:first-child {
+  flex: 1;
+}
+
+td .projectName {
+  padding-left: 40px;
+}
+
+td .projectVersion {
+  padding-left: 80px;
+}
+
+.healthReportHide + .hiddenDiv {
+  display: none;
+}
+
+.healthReportHover + .hiddenDiv {
+  position: absolute;
+  z-index: 1;
+}
+
+/*.healthReportHover + .hiddenDiv table thead{
+  padding-left: 35px;
+}*/
+
+.healthReportHover + .hiddenDiv table{
+  margin-left: 100px;
+}
+
+
+.healthReportHover + .hiddenDiv .tableHead{
+  background-color: #A9A9A9;
+}
+
+.healthReportHover + .hiddenDiv .tableLine{
+  background-color: #FFD267;
 }

@@ -27,7 +27,7 @@ function rowlCategory(balise) {
       for (j = 0; j < mainProj.length; j++)
         {
           var img = document.createElement('img');
-          img.setAttribute("class", "center-block pull-right");
+          //img.setAttribute("class", "center-block pull-right");
           img.setAttribute("src", "../ressources/plus.png");
           img.setAttribute("width", "25px");
           img.setAttribute("height", "25px");
@@ -37,7 +37,11 @@ function rowlCategory(balise) {
           line.setAttribute("name", childTabHtml[i].textContent);
           line.setAttribute("id", childTabHtml[i].textContent);
           var cell = line.insertCell(0);
-          cell.innerHTML += mainProj[j];
+          var textCell = document.createElement('p');
+          textCell.innerHTML += mainProj[j];
+          textCell.setAttribute("class", "projectName");
+          cell.appendChild(textCell);
+          //cell.innerHTML += mainProj[j];
           cell.appendChild(img);
           cell = line.insertCell(1);
           cell = line.insertCell(2);
@@ -78,12 +82,19 @@ function rowlProject(balise) {
       for (j = 0; j < projs.length; j++)
         {
             var line = tabHtml.insertRow(i);
-            line.setAttribute("class", "info");
+            line.setAttribute("class", "warning");
             line.setAttribute("name", projs[j].category/* + "_version"*/);
             //line.setAttribute("name", childTabHtml[i].textContent);
             line.setAttribute("id", childTabHtml[i].textContent);
             var cell = line.insertCell(0);
-            cell.innerHTML += projs[j].fullNameProject;
+            var linkText = document.createElement('a');
+            linkText.setAttribute("href", window.addrServer + "jenkins/job/" + projs[j].fullNameProject);
+            var textCell = document.createElement('p');
+            textCell.innerHTML += projs[j].nameVersion;
+            textCell.setAttribute("class", "projectVersion");
+            linkText.appendChild(textCell);
+            cell.appendChild(linkText);
+            //cell.innerHTML += projs[j].nameVersion;
             cell = line.insertCell(1);
             setImageHealth(cell, projs[j]);
             cell = line.insertCell(2);

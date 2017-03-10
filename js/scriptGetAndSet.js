@@ -10,13 +10,28 @@
 ** The function getHealthMain get the score of health for a project.
 */
 
-function gethealthMain(xhr) {
+function gethealthMain(xhr, project) {
 
-  var healthInfo = xhr.responseXML.querySelector("score") !== null;
+  var healthInfo = xhr.responseXML.querySelectorAll("score") !== null;
   if (healthInfo == true)
     {
-      var healthInfo = xhr.responseXML.querySelector("score").textContent;
-      return (healthInfo);
+      var healthInfo = xhr.responseXML.querySelectorAll("score");
+      //console.log("The result of the response is : " + xhr.responseXML.querySelectorAll("score")[0].textContent);
+      //console.log("DEBUG: For the project -> " + project.fullNameProject + "  The score healt equal -> " + healthInfo[0].textContent);
+      if (healthInfo[0] != null)
+        project.health = healthInfo[0].textContent;
+      if (healthInfo[1] != null)
+        project.buildStability = healthInfo[1].textContent;
+      //return (healthInfo);
+    }
+  var descriptionInfo = xhr.responseXML.querySelectorAll("description") !== null;
+  if (descriptionInfo == true)
+    {
+      descriptionInfo = xhr.responseXML.querySelectorAll("description");
+      if (descriptionInfo[0] != null)
+        project.healthDescription = descriptionInfo[0].textContent;
+      if (descriptionInfo[1] != null)
+        project.buildStabilityDescription = descriptionInfo[1].textContent;
     }
 }
 
@@ -32,22 +47,26 @@ function setImageHealth(cell, project)
   if (project.health != null)
   {
       if (project.health > 80)
-      img.setAttribute("src", "../ressources/veryGoodHealth.png");
+        img.setAttribute("src", "../ressources/veryGoodHealth.png");
       else if (project.health > 60 && project.health <= 80)
-      img.setAttribute("src", "../ressources/goodHealth.png");
+        img.setAttribute("src", "../ressources/goodHealth.png");
       else if (project.health > 40 && project.health <= 60)
-      img.setAttribute("src", "../ressources/mediumHealth.png");
+        img.setAttribute("src", "../ressources/mediumHealth.png");
       else if (project.health > 20 && project.health <= 40)
-      img.setAttribute("src", "../ressources/badHealth.png");
+        img.setAttribute("src", "../ressources/badHealth.png");
       else if (project.health <= 20)
-      img.setAttribute("src", "../ressources/veryBadHealth.png");
+        img.setAttribute("src", "../ressources/veryBadHealth.png");
     }
   else
     img.setAttribute("src", "../ressources/veryGoodHealth.png");
-  img.setAttribute("class", "center-block");
+  img.setAttribute("class", "center-block healthReportHide");
   img.setAttribute("width", "25px");
   img.setAttribute("height", "25px");
+  img.setAttribute("onmouseover", "changeInHoverClass(this)");
+  img.setAttribute("onmouseout", "changeInHideClass(this)");
+
   cell.appendChild(img);
+  cell.appendChild(createDescriptHealth(project, img.src));
 }
 
 /*
@@ -111,7 +130,6 @@ function getImageDocumentation(cell, project)
 
   var urlDoc = window.addrServer + "jenkins/job/";
   urlDoc += project.fullNameProject + '/doxygen/';
-  //urlDoc += project.nameProject + '/doxygen/';
 
   xhr3.withCredentials = true;
   xhr3.open("GET", urlDoc);
@@ -209,7 +227,6 @@ function getTestResult(cell, project) {
   var xhr5 = new XMLHttpRequest();
 
   var urlTest = window.addrServer + "jenkins/job/";
-  //urlTest += project.nameProject + "/" + project.numberBuild + "/testReport/api/xml";
   urlTest += project.fullNameProject + "/" + project.numberBuild + "/testReport/api/xml";
   xhr5.withCredentials = true;
   xhr5.open("GET", urlTest);
@@ -218,6 +235,11 @@ function getTestResult(cell, project) {
   xhr5.onreadystatechange = function() {
     if (xhr5.readyState === 4) {
       if (xhr5.status === 200) {
+
+        //xhr5.qu
+
+
+
 
         var baliseImg = document.createElement("img");
         var baliseRef = document.createElement("a");
@@ -232,8 +254,11 @@ function getTestResult(cell, project) {
       }
     }
   };
-
 }
+
+/*function setTestResult(cell, project) {
+
+}*/
 
 /*
 ** The function stringToXml convert a text document in XML document.

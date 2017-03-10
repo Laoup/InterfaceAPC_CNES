@@ -12,10 +12,14 @@
 */
 
 var xhrInit = new XMLHttpRequest();
+var xhrTest = new XMLHttpRequest();
 /*window.tabProjects = new Array();*/
 window.projectsHandler = new projectHandler();
 window.FuncOL = new Array();
 
+/*xhrTest.withCredentials = true;
+xhrTest.open("GET", "https://apceuclidjks4.in2p3.fr/jenkins/securityRealm/commenceLogin?from=/jenkins/", false);
+xhrTest.send();*/
 
 var loadingIconeTarget = document.getElementById("MainTableDiv");
 var loadingIcone = document.createElement("h2");
@@ -64,7 +68,8 @@ xhrInit.onreadystatechange = function() {
                 if (tabSubBuild.indexOf(tabName[i].textContent) == -1 && tabName[i].textContent != "All" && tabName[i].textContent != "Pilote")
                   {
                     var xhr2 = new XMLHttpRequest();
-                    var urlProj = window.addrServer + "jenkins/job/" + tabName[i].textContent + "/api/xml?tree=builds[subBuilds[jobName],number]{0},healthReport[score]{0}";
+                    var urlProj = window.addrServer + "jenkins/job/" + tabName[i].textContent + "/api/xml?tree=builds[subBuilds[jobName],number]{0},healthReport[score,description]";
+                    //var urlProj = window.addrServer + "jenkins/job/" + tabName[i].textContent + "/api/xml?tree=builds[subBuilds[jobName],number]{0},healthReport[score]{0}";
 
                     xhr2.withCredentials = true;
                     xhr2.open("GET", urlProj, false);
@@ -86,19 +91,11 @@ xhrInit.onreadystatechange = function() {
                                 j = j + 1;
                               }
                             var project = new Project(tabName[i].textContent);
-                            /*console.log("STOP !");
-                            console.log("------------------------------");
-                            console.log("Full name is : " + project.fullNameProject);
-                            console.log("nameMain is : " + project.nameMain);
-                            console.log("Category is : " + project.category);
-                            console.log("The version name is : " + project.nameVersion);
-                            console.log("------------------------------");*/
-                            //project.category = identifyCategory(project);
-                            project.health = gethealthMain(xhr2);
+                            /*project.health = */gethealthMain(xhr2, project);
+                            //console.log("DEBUG: For the project -> " + project.fullNameProject + "  The score healt equal -> " + project.health);
                             project.numberBuild = getNumberBuild(xhr2);
                             project.color = tabColor[i].textContent;
                             window.projectsHandler.addProject(project);
-                            //tabProjectsBranch.push(project);
                           }
                       }
                     }
@@ -156,13 +153,13 @@ function findCategory() {
 function fillTab(category) {
 
   var tabHtml = document.getElementById('MainTableBody');
-  //console.log(document.getElementById("loadingIcone"));
   var loadingIcone = document.getElementById("loadingIcone");
   loadingIcone.parentNode.removeChild(loadingIcone);
 
   for (var l = 0; l < category.length; l++)
     {
       var lineCat = tabHtml.insertRow(-1);
+      //lineCat.setAttribute("class", "lineCategory");
       var cellLineCat = lineCat.insertCell(0);
       var nImage = document.createElement('img');
       nImage.setAttribute("class", "center-block pull-right");
