@@ -6,9 +6,8 @@
 */
 
 /*
-** The function rowl manage the appear of the plus and minus logo.
-** Her manage also the display of information about each project and the display of the
-** projects themselves.
+** The function rowlCategory manage the appear of the plus and minus logo for the top level(->CategoryName).
+** Her manage also the display of name of projects for the middleLevel(->ProjectsName).
 */
 
 function rowlCategory(balise) {
@@ -41,7 +40,6 @@ function rowlCategory(balise) {
           textCell.innerHTML += mainProj[j];
           textCell.setAttribute("class", "projectName");
           cell.appendChild(textCell);
-          //cell.innerHTML += mainProj[j];
           cell.appendChild(img);
           cell = line.insertCell(1);
           cell = line.insertCell(2);
@@ -54,7 +52,6 @@ function rowlCategory(balise) {
   else
     {
       balise.src = "../ressources/plus.png"
-      //nb += document.getElementsByName(childTabHtml[i].textContent/* + "_version"*/).length;
       while (nb != 0)
         {
           tabHtml.deleteRow(i);
@@ -62,6 +59,12 @@ function rowlCategory(balise) {
         }
     }
 }
+
+/*
+** The function rowl manage the appear of the plus and minus logo for the middle level(->ProjectName).
+** Her manage also the display of information about each project version and the display of the
+** projects themselves.
+*/
 
 function rowlProject(balise) {
 
@@ -72,19 +75,15 @@ function rowlProject(balise) {
   while (balise.parentNode.parentNode !== childTabHtml[i])
     i = i + 1;
   var nb = 0;
-  console.log(balise.parentNode.parentNode.getAttribute('name'));
-  //if ((nb = document.getElementsByName(balise.parentNode.parentNode.getAttribute('name') + "_version_" + childTabHtml[i].textContent ).length) == 0)
   if (document.getElementById(childTabHtml[i].textContent) == null)
     {
       balise.src = "../ressources/moins.png"
       var projs = window.projectsHandler.getAllVersion(childTabHtml[i].textContent, childTabHtml[i].getAttribute('name'));
-      //console.log(childTabHtml[i].getAttribute('name'));
       for (j = 0; j < projs.length; j++)
         {
             var line = tabHtml.insertRow(i);
             line.setAttribute("class", "warning");
-            line.setAttribute("name", projs[j].category/* + "_version"*/);
-            //line.setAttribute("name", childTabHtml[i].textContent);
+            line.setAttribute("name", projs[j].category);
             line.setAttribute("id", childTabHtml[i].textContent);
             var cell = line.insertCell(0);
             var linkText = document.createElement('a');
@@ -94,7 +93,6 @@ function rowlProject(balise) {
             textCell.setAttribute("class", "projectVersion");
             linkText.appendChild(textCell);
             cell.appendChild(linkText);
-            //cell.innerHTML += projs[j].nameVersion;
             cell = line.insertCell(1);
             setImageHealth(cell, projs[j]);
             cell = line.insertCell(2);
@@ -106,13 +104,11 @@ function rowlProject(balise) {
             cell = line.insertCell(5);
             cellSonar = line.insertCell(6);
             getRepository(projs[j], cell, cellSonar);
-            //getRepository(tabProjects[j], cell, cellSonar);
           }
     }
   else
     {
       balise.src = "../ressources/plus.png"
-      //while (nb != 0)
       while (document.getElementById(childTabHtml[i].textContent) != null)
         {
           tabHtml.deleteRow(i);

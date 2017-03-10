@@ -13,13 +13,8 @@
 
 var xhrInit = new XMLHttpRequest();
 var xhrTest = new XMLHttpRequest();
-/*window.tabProjects = new Array();*/
 window.projectsHandler = new projectHandler();
 window.FuncOL = new Array();
-
-/*xhrTest.withCredentials = true;
-xhrTest.open("GET", "https://apceuclidjks4.in2p3.fr/jenkins/securityRealm/commenceLogin?from=/jenkins/", false);
-xhrTest.send();*/
 
 var loadingIconeTarget = document.getElementById("MainTableDiv");
 var loadingIcone = document.createElement("h2");
@@ -56,7 +51,7 @@ xhrInit.onreadystatechange = function() {
             var tabName = xhr.responseXML.querySelectorAll('name');
             var tabColor = xhr.responseXML.querySelectorAll('color');
 
-            function getAllOU(/*tabName*/) {
+            function getAllOU() {
 
               var i = 0;
               var j = 0;
@@ -69,7 +64,6 @@ xhrInit.onreadystatechange = function() {
                   {
                     var xhr2 = new XMLHttpRequest();
                     var urlProj = window.addrServer + "jenkins/job/" + tabName[i].textContent + "/api/xml?tree=builds[subBuilds[jobName],number]{0},healthReport[score,description]";
-                    //var urlProj = window.addrServer + "jenkins/job/" + tabName[i].textContent + "/api/xml?tree=builds[subBuilds[jobName],number]{0},healthReport[score]{0}";
 
                     xhr2.withCredentials = true;
                     xhr2.open("GET", urlProj, false);
@@ -78,7 +72,6 @@ xhrInit.onreadystatechange = function() {
                     if (xhr2.responseXML != null)
                       {
                         j = 0;
-                        //if (xhr2.responseXML.querySelector("upstreamProject") == null)
                         if (xhr2.responseXML.querySelector("subBuild") != null)
                           {
                             var tabSubJob = xhr2.responseXML.querySelectorAll("jobName");
@@ -91,8 +84,7 @@ xhrInit.onreadystatechange = function() {
                                 j = j + 1;
                               }
                             var project = new Project(tabName[i].textContent);
-                            /*project.health = */gethealthMain(xhr2, project);
-                            //console.log("DEBUG: For the project -> " + project.fullNameProject + "  The score healt equal -> " + project.health);
+                            gethealthMain(xhr2, project);
                             project.numberBuild = getNumberBuild(xhr2);
                             project.color = tabColor[i].textContent;
                             window.projectsHandler.addProject(project);
@@ -106,9 +98,7 @@ xhrInit.onreadystatechange = function() {
 
             function fillAll() {
 
-              //var category = findCategory();
               var category = projectsHandler.getCategoryExist();
-              //projectsHandler.affAllMainProjects();
               fillTab(category);
             };
 
@@ -123,32 +113,8 @@ xhrInit.onreadystatechange = function() {
 };
 
 /*
-** The next Function is used for determine the category of one project.
+** The next function is used for fill the dashboard with the names of categories of all the projects.
 */
-
-function identifyCategory(project) {
-
-  if (project.nameProject.indexOf('_') != -1)
-    return project.nameProject.substring(0, project.nameProject.indexOf('_'));
-}
-
-/*
-** The next function is used for find the different categories present in the dashboard.
-*/
-
-function findCategory() {
-
-  var category = new Array();
-  var i;
-
-  for (i = 0; i < window.tabProjects.length; i++)
-    {
-      if (category.indexOf(window.tabProjects[i].category) == -1 &&
-        typeof window.tabProjects[i].category !== 'undefined')
-          category.push(window.tabProjects[i].category);
-    }
-  return (category);
-}
 
 function fillTab(category) {
 
@@ -159,7 +125,6 @@ function fillTab(category) {
   for (var l = 0; l < category.length; l++)
     {
       var lineCat = tabHtml.insertRow(-1);
-      //lineCat.setAttribute("class", "lineCategory");
       var cellLineCat = lineCat.insertCell(0);
       var nImage = document.createElement('img');
       nImage.setAttribute("class", "center-block pull-right");

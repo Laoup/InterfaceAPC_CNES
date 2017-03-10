@@ -7,7 +7,7 @@
 
 
 /*
-** The function getHealthMain get the score of health for a project.
+** The function getHealthMain get the score and the description of health for a project.
 */
 
 function gethealthMain(xhr, project) {
@@ -16,13 +16,10 @@ function gethealthMain(xhr, project) {
   if (healthInfo == true)
     {
       var healthInfo = xhr.responseXML.querySelectorAll("score");
-      //console.log("The result of the response is : " + xhr.responseXML.querySelectorAll("score")[0].textContent);
-      //console.log("DEBUG: For the project -> " + project.fullNameProject + "  The score healt equal -> " + healthInfo[0].textContent);
       if (healthInfo[0] != null)
         project.health = healthInfo[0].textContent;
       if (healthInfo[1] != null)
         project.buildStability = healthInfo[1].textContent;
-      //return (healthInfo);
     }
   var descriptionInfo = xhr.responseXML.querySelectorAll("description") !== null;
   if (descriptionInfo == true)
@@ -148,7 +145,6 @@ function getRepository(project, cell, cellSonar) {
   if (project.numberBuild != null)
     {
       var urlBuildProject = window.addrServer + "jenkins/job/";
-      //urlBuildProject += project.nameProject + "/" + project.numberBuild + "/api/xml";
       urlBuildProject += project.fullNameProject + "/" + project.numberBuild + "/api/xml";
       xhr4.withCredentials = true;
       xhr4.open("GET", urlBuildProject);
@@ -236,11 +232,6 @@ function getTestResult(cell, project) {
     if (xhr5.readyState === 4) {
       if (xhr5.status === 200) {
 
-        //xhr5.qu
-
-
-
-
         var baliseImg = document.createElement("img");
         var baliseRef = document.createElement("a");
         baliseImg.setAttribute("src", "../ressources/Report.jpg");
@@ -255,10 +246,6 @@ function getTestResult(cell, project) {
     }
   };
 }
-
-/*function setTestResult(cell, project) {
-
-}*/
 
 /*
 ** The function stringToXml convert a text document in XML document.

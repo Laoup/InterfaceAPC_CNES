@@ -11,6 +11,11 @@
 ** Another object "projectHandler" is the manager for add project or get information about him.
 */
 
+/*
+** Here the constructor of the "Project" category. During the construction he fill one part of this object
+** with infomation about the project.
+*/
+
 function Project(fullNameProject) {
   this.fullNameProject = fullNameProject;
   this.nameMain = null;
@@ -30,7 +35,6 @@ function Project(fullNameProject) {
       this.category = fullNameProject.substring(0, fullNameProject.indexOf('_'));
       fullNameProject = fullNameProject.substring(fullNameProject.indexOf('_') + 1);
     }
-  console.log("During the creation, after step one the string Name is: " + fullNameProject);
   if (fullNameProject.indexOf('_') != -1)
     {
       if (fullNameProject.indexOf("BR") != -1)
