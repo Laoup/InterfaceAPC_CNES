@@ -6775,12 +6775,54 @@ footer {
   margin-bottom: 2%;
 }
 
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  height: 450px;
+}
 
+thead {
+  width: calc(100% - 17px);
+  height: 70px;
+}
+
+thead, tbody, tr, td, th { display: block; }
+
+tr:after
+{
+            content: ' ';
+            display: block;
+            visibility: hidden;
+            clear: both;
+}
+
+tbody {
+            height: 380px;
+            overflow-y: auto;
+        }
+
+tbody tr td, thead th {
+                    width: 13%;
+                    float: left;
+                }
+
+thead th:first-child, tbody tr td:first-child {
+  width: 20%
+}
+
+thead th:last-child, tbody tr td:last-child
+{
+  width: 15%;
+}
+
+td {
+  height: 42px;
+}
 
 #MainTableDiv {
   margin-bottom: 100px;
+  height: 450px;
 /*  overflow: hidden;
-  height: 300px;
   clear: both;*/
 }
 
