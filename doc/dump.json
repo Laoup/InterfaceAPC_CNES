@@ -1,0 +1,1576 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "name": "js/functionFillTab.js",
+    "content": "/*\n** JavaScript File\n** Name : functionFillTab.js\n** Start by: Alban Meurice\n** 22/12/2016\n*/\n\n/**\n* The function rowlCategory manage the appear of the plus and minus logo for the top level(->CategoryName).\n* Her manage also the display of name of projects for the middleLevel(->ProjectsName).\n* @param {HtmlObject} balise - balise is the result of the call this function by a onClick html with a param \"this\". It's mean arg balise is the balise html reference.\n*/\nexport function rowlCategory(balise) {\n\n  var tabHtml = document.getElementById('MainTableBody');\n  var childTabHtml = tabHtml.childNodes;\n  var i = 0;\n  var j = 0;\n  while (balise.parentNode.parentNode !== childTabHtml[i])\n    i = i + 1;\n  var nb = 0;\n  if ((nb = document.getElementsByName(childTabHtml[i].textContent).length) == 0)\n    {\n      balise.src = \"../ressources/moins.png\"\n      var mainProj = window.projectsHandler.getAllCategoryProjects(childTabHtml[i].textContent);\n      for (j = 0; j < mainProj.length; j++)\n        {\n          var img = document.createElement('img');\n          //img.setAttribute(\"class\", \"center-block pull-right\");\n          img.setAttribute(\"src\", \"../ressources/plus.png\");\n          img.setAttribute(\"width\", \"25px\");\n          img.setAttribute(\"height\", \"25px\");\n          img.setAttribute(\"onClick\", \"rowlProject(this)\");\n          var line = tabHtml.insertRow(i);\n          line.setAttribute(\"class\", \"info\");\n          line.setAttribute(\"name\", childTabHtml[i].textContent);\n          line.setAttribute(\"id\", childTabHtml[i].textContent);\n          var cell = line.insertCell(0);\n          var textCell = document.createElement('p');\n          textCell.innerHTML += mainProj[j];\n          textCell.setAttribute(\"class\", \"projectName\");\n          cell.appendChild(textCell);\n          cell.appendChild(img);\n          cell = line.insertCell(1);\n          cell = line.insertCell(2);\n          cell = line.insertCell(3);\n          cell = line.insertCell(4);\n          cell = line.insertCell(5);\n          cellSonar = line.insertCell(6);\n        }\n    }\n  else\n    {\n      balise.src = \"../ressources/plus.png\"\n      while (nb != 0)\n        {\n          tabHtml.deleteRow(i);\n          nb = nb - 1;\n        }\n    }\n}\n\n/**\n* The function rowl manage the appear of the plus and minus logo for the middle level(->ProjectName).\n* Her manage also the display of information about each project version and the display of the\n* projects themselves.\n* @param {HtmlObject} balise - balise is the result of the call this function by a onClick html with a param \"this\". It's mean arg balise is the balise html reference.\n*/\nexport function rowlProject(balise) {\n\n  var tabHtml = document.getElementById('MainTableBody');\n  var childTabHtml = tabHtml.childNodes;\n  var i = 0;\n  var j = 0;\n  while (balise.parentNode.parentNode !== childTabHtml[i])\n    i = i + 1;\n  var nb = 0;\n  if (document.getElementById(childTabHtml[i].textContent) == null)\n    {\n      balise.src = \"../ressources/moins.png\"\n      var projs = window.projectsHandler.getAllVersion(childTabHtml[i].textContent, childTabHtml[i].getAttribute('name'));\n      for (j = 0; j < projs.length; j++)\n        {\n            var line = tabHtml.insertRow(i);\n            line.setAttribute(\"class\", \"warning\");\n            line.setAttribute(\"name\", projs[j].category);\n            line.setAttribute(\"id\", childTabHtml[i].textContent);\n            var cell = line.insertCell(0);\n            var linkText = document.createElement('a');\n            linkText.setAttribute(\"href\", window.addrServer + \"jenkins/job/\" + projs[j].fullNameProject);\n            var textCell = document.createElement('p');\n            textCell.innerHTML += projs[j].nameVersion;\n            textCell.setAttribute(\"class\", \"projectVersion\");\n            linkText.appendChild(textCell);\n            cell.appendChild(linkText);\n            cell = line.insertCell(1);\n            setImageHealth(cell, projs[j]);\n            cell = line.insertCell(2);\n            setImageBuildResult(cell, projs[j]);\n            cell = line.insertCell(3);\n            getTestResult(cell, projs[j]);\n            cell = line.insertCell(4);\n            getImageDocumentation(cell, projs[j]);\n            cell = line.insertCell(5);\n            cellSonar = line.insertCell(6);\n            getRepository(projs[j], cell, cellSonar);\n          }\n    }\n  else\n    {\n      balise.src = \"../ressources/plus.png\"\n      while (document.getElementById(childTabHtml[i].textContent) != null)\n        {\n          tabHtml.deleteRow(i);\n          nb = nb - 1;\n        }\n    }\n}\n",
+    "static": true,
+    "longname": "js/functionFillTab.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "function",
+    "name": "rowlCategory",
+    "memberof": "js/functionFillTab.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/functionFillTab.js~rowlCategory",
+    "access": null,
+    "export": true,
+    "importPath": "./js/functionFillTab.js",
+    "importStyle": "{rowlCategory}",
+    "description": "The function rowlCategory manage the appear of the plus and minus logo for the top level(->CategoryName).\nHer manage also the display of name of projects for the middleLevel(->ProjectsName).",
+    "lineNumber": 13,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "HtmlObject"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "balise",
+        "description": "balise is the result of the call this function by a onClick html with a param \"this\". It's mean arg balise is the balise html reference."
+      }
+    ]
+  },
+  {
+    "__docId__": 2,
+    "kind": "function",
+    "name": "rowlProject",
+    "memberof": "js/functionFillTab.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/functionFillTab.js~rowlProject",
+    "access": null,
+    "export": true,
+    "importPath": "./js/functionFillTab.js",
+    "importStyle": "{rowlProject}",
+    "description": "The function rowl manage the appear of the plus and minus logo for the middle level(->ProjectName).\nHer manage also the display of information about each project version and the display of the\nprojects themselves.",
+    "lineNumber": 69,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "HtmlObject"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "balise",
+        "description": "balise is the result of the call this function by a onClick html with a param \"this\". It's mean arg balise is the balise html reference."
+      }
+    ]
+  },
+  {
+    "__docId__": 3,
+    "kind": "file",
+    "name": "js/interfaceJenkins.js",
+    "content": "/*\n** JavaScript File\n** Name : interfaceJenkins.js\n** Start by: Alban Meurice\n** 13/01/2017\n*/\n\n\n/*\n** The following code is not put into a function is use for put the wait message during the loading\n** of the page. It's also use for get the config parameters like the name of the Jenkins server.\n*/\n\nvar xhrInit = new XMLHttpRequest();\nvar xhrTest = new XMLHttpRequest();\nwindow.projectsHandler = new projectHandler();\nwindow.FuncOL = new Array();\n\nvar loadingIconeTarget = document.getElementById(\"MainTableDiv\");\nvar loadingIcone = document.createElement(\"h2\");\nloadingIcone.innerHTML = \"Wait few seconds please. the Jenkins server information is loading\";\nloadingIcone.setAttribute(\"id\", \"loadingIcone\");\nloadingIcone.setAttribute(\"class\", \"text-center\");\nloadingIconeTarget.appendChild(loadingIcone);\n\nxhrInit.open(\"GET\", \"../ressources/configFile.xml\")\nxhrInit.send();\n\n/**\n* @desc The following code is use for prepare and use the request needed for get the Jenkins information.\n* The function getALLOU is use for put the projects into a table of MainProject and get information\n* about their status.\n*/\nxhrInit.onreadystatechange = function() {\n  if (xhrInit.readyState === 4) {\n    if (xhrInit.status === 200) {\n\n      window.addrServer = xhrInit.responseXML.querySelector(\"Server\").textContent;\n\n      var xhr = new XMLHttpRequest();\n\n      xhr.withCredentials = true;\n      xhr.open(\"GET\", window.addrServer + \"jenkins/api/xml?tree=jobs[name,color]\");\n      xhr.send();\n\n      xhr.onreadystatechange = function() {\n        if (xhr.readyState === 4) {\n          if (xhr.status === 200) {\n\n            var tabName = xhr.responseXML.querySelectorAll('name');\n            var tabColor = xhr.responseXML.querySelectorAll('color');\n\n            function getAllOU() {\n\n              var i = 0;\n              var j = 0;\n              var tabSubBuild = new Array();\n              var tabProjectsBranch = new Array();\n\n              for (i = 0; i < tabName.length; i++)\n              {\n                if (tabSubBuild.indexOf(tabName[i].textContent) == -1 && tabName[i].textContent != \"All\" && tabName[i].textContent != \"Pilote\")\n                  {\n                    var xhr2 = new XMLHttpRequest();\n                    var urlProj = window.addrServer + \"jenkins/job/\" + tabName[i].textContent + \"/api/xml?tree=builds[subBuilds[jobName],number]{0},healthReport[score,description]\";\n\n                    xhr2.withCredentials = true;\n                    xhr2.open(\"GET\", urlProj, false);\n                    xhr2.send();\n\n                    if (xhr2.responseXML != null)\n                      {\n                        j = 0;\n                        if (xhr2.responseXML.querySelector(\"subBuild\") != null)\n                          {\n                            var tabSubJob = xhr2.responseXML.querySelectorAll(\"jobName\");\n                            while (j < tabSubJob.length)\n                              {\n                                if (tabSubBuild.indexOf(tabSubJob[j].textContent) == -1)\n                                  {\n                                    tabSubBuild.push(tabSubJob[j].textContent);\n                                  }\n                                j = j + 1;\n                              }\n                            var project = new Project(tabName[i].textContent);\n                            gethealthMain(xhr2, project);\n                            project.numberBuild = getNumberBuild(xhr2);\n                            project.color = tabColor[i].textContent;\n                            window.projectsHandler.addProject(project);\n                          }\n                      }\n                    }\n\n                  }\n              }\n\n            getAllOU(tabName);\n\n            function fillAll() {\n\n              var category = projectsHandler.getCategoryExist();\n              fillTab(category);\n            };\n\n            StkFunc(fillAll);\n\n            window.onload = StkExec();\n          }\n        }\n      };\n    }\n  }\n};\n\n/**\n* The next function is used for fill the dashboard with the names of categories of all the projects.\n* @param {Array} category - The variable category is a Array of all category you want display on the dasboard at the first level.\n*/\nexport function fillTab(category) {\n\n  var tabHtml = document.getElementById('MainTableBody');\n  var loadingIcone = document.getElementById(\"loadingIcone\");\n  loadingIcone.parentNode.removeChild(loadingIcone);\n\n  for (var l = 0; l < category.length; l++)\n    {\n      var lineCat = tabHtml.insertRow(-1);\n      var cellLineCat = lineCat.insertCell(0);\n      var nImage = document.createElement('img');\n      nImage.setAttribute(\"class\", \"center-block pull-right\");\n      nImage.setAttribute(\"src\", \"../ressources/plus.png\")\n      nImage.setAttribute(\"width\", \"25px\");\n      nImage.setAttribute(\"height\", \"25px\");\n      nImage.setAttribute(\"onClick\", \"rowlCategory(this)\");\n      cellLineCat.innerHTML += category[l];\n      cellLineCat.appendChild(nImage);\n      cellLineCat = lineCat.insertCell(1);\n      cellLineCat = lineCat.insertCell(2);\n      cellLineCat = lineCat.insertCell(3);\n      cellLineCat = lineCat.insertCell(4);\n      cellLineCat = lineCat.insertCell(5);\n      cellLineCat = lineCat.insertCell(6);\n    }\n}\n\n/*\n** The two next functions is used for remplace the utiisation of window.onload\n** more information at \"http://babylon-design.com/eviter-conflit-javascript-window-onload/\"\n*/\n\nfunction StkFunc(func)\n{\n\twindow.FuncOL[window.FuncOL.length] = func;\n}\n\nfunction StkExec()\n{\n  console.log(\"StkExec\");\n  for (var i = 0; i < window.FuncOL.length; i++)\n    window.FuncOL[i]();\n}\n",
+    "static": true,
+    "longname": "js/interfaceJenkins.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 4,
+    "kind": "variable",
+    "name": "xhrInit",
+    "memberof": "js/interfaceJenkins.js",
+    "static": true,
+    "longname": "js/interfaceJenkins.js~xhrInit",
+    "access": null,
+    "export": false,
+    "importPath": "./js/interfaceJenkins.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "XMLHttpRequest"
+      ]
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "variable",
+    "name": "xhrTest",
+    "memberof": "js/interfaceJenkins.js",
+    "static": true,
+    "longname": "js/interfaceJenkins.js~xhrTest",
+    "access": null,
+    "export": false,
+    "importPath": "./js/interfaceJenkins.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "XMLHttpRequest"
+      ]
+    }
+  },
+  {
+    "__docId__": 6,
+    "kind": "variable",
+    "name": "loadingIconeTarget",
+    "memberof": "js/interfaceJenkins.js",
+    "static": true,
+    "longname": "js/interfaceJenkins.js~loadingIconeTarget",
+    "access": null,
+    "export": false,
+    "importPath": "./js/interfaceJenkins.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 7,
+    "kind": "variable",
+    "name": "loadingIcone",
+    "memberof": "js/interfaceJenkins.js",
+    "static": true,
+    "longname": "js/interfaceJenkins.js~loadingIcone",
+    "access": null,
+    "export": false,
+    "importPath": "./js/interfaceJenkins.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 20,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 8,
+    "kind": "function",
+    "name": "onreadystatechange",
+    "memberof": "js/interfaceJenkins.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/interfaceJenkins.js~onreadystatechange",
+    "access": null,
+    "export": false,
+    "importPath": "./js/interfaceJenkins.js",
+    "importStyle": null,
+    "description": "The following code is use for prepare and use the request needed for get the Jenkins information.\nThe function getALLOU is use for put the projects into a table of MainProject and get information\nabout their status.",
+    "lineNumber": 34,
+    "params": []
+  },
+  {
+    "__docId__": 9,
+    "kind": "function",
+    "name": "fillTab",
+    "memberof": "js/interfaceJenkins.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/interfaceJenkins.js~fillTab",
+    "access": null,
+    "export": true,
+    "importPath": "./js/interfaceJenkins.js",
+    "importStyle": "{fillTab}",
+    "description": "The next function is used for fill the dashboard with the names of categories of all the projects.",
+    "lineNumber": 119,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "category",
+        "description": "The variable category is a Array of all category you want display on the dasboard at the first level."
+      }
+    ]
+  },
+  {
+    "__docId__": 10,
+    "kind": "function",
+    "name": "StkFunc",
+    "memberof": "js/interfaceJenkins.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/interfaceJenkins.js~StkFunc",
+    "access": null,
+    "export": false,
+    "importPath": "./js/interfaceJenkins.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 151,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "func",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 11,
+    "kind": "function",
+    "name": "StkExec",
+    "memberof": "js/interfaceJenkins.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/interfaceJenkins.js~StkExec",
+    "access": null,
+    "export": false,
+    "importPath": "./js/interfaceJenkins.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 156,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 12,
+    "kind": "file",
+    "name": "js/neededLogPage.js",
+    "content": "/*\n** JavaScript File\n** Name : scriptHealth.js\n** Start by: Alban Meurice\n** 27/01/2017\n*/\n\n\nvar xhrInit = new XMLHttpRequest();\n\nxhrInit.open(\"GET\", \"../ressources/configFile.xml\")\nxhrInit.send();\n\nxhrInit.onreadystatechange = function() {\n  if (xhrInit.readyState === 4) {\n    if (xhrInit.status === 200) {\n\n      window.addrServer = xhrInit.responseXML.querySelector(\"Server\").textContent;\n\n    }\n  }\n};\n\nwindow.onload = function() {\n\n  var elemParent = document.getElementById(\"informationArea\");\n  var newElem = document.createElement(\"h4\");\n\n  newElem.innerHTML = \"For access to the website you need to log in at \" + window.addrServer;\n  newElem.setAttribute(\"class\", \"text-center\");\n  elemParent.insertBefore(newElem, elemParent.firstChild);\n\n}\n\nfunction connectionIsOk() {\n\n  var xhrPing = new XMLHttpRequest();\n  xhrPing.withCredentials = true;\n  var check = 0;\n\n  xhrPing.onreadystatechange = function() {\n    if (xhrPing.readyState === 4) {\n      if (xhrPing.status === 200) {\n\n        window.location = \"../html/main_page.html\";\n\n      }\n      else if (xhrPing.status === 403)\n        {\n\n          var elem = document.getElementById(\"informationArea\");\n          elem.firstChild.innerHTML = \"You don't have access to the \" + window.addrServer + \"server.\";\n          elem.firstChild.innerHTML += \"\\nMaybe you are not connected to CAS or you need to reconnect.\"\n\n        }\n      else\n      {\n\n        var elem = document.getElementById(\"informationArea\");\n        elem.firstChild.innerHTML = \"It's impossible to join the server\";\n\n      }\n    }\n  };\n\n  xhrPing.open(\"GET\", window.addrServer + \"jenkins/\");\n  xhrPing.send();\n}\n",
+    "static": true,
+    "longname": "js/neededLogPage.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 13,
+    "kind": "variable",
+    "name": "xhrInit",
+    "memberof": "js/neededLogPage.js",
+    "static": true,
+    "longname": "js/neededLogPage.js~xhrInit",
+    "access": null,
+    "export": false,
+    "importPath": "./js/neededLogPage.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "XMLHttpRequest"
+      ]
+    }
+  },
+  {
+    "__docId__": 14,
+    "kind": "function",
+    "name": "onreadystatechange",
+    "memberof": "js/neededLogPage.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/neededLogPage.js~onreadystatechange",
+    "access": null,
+    "export": false,
+    "importPath": "./js/neededLogPage.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 15,
+    "kind": "function",
+    "name": "onload",
+    "memberof": "js/neededLogPage.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/neededLogPage.js~onload",
+    "access": null,
+    "export": false,
+    "importPath": "./js/neededLogPage.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 24,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 16,
+    "kind": "function",
+    "name": "connectionIsOk",
+    "memberof": "js/neededLogPage.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/neededLogPage.js~connectionIsOk",
+    "access": null,
+    "export": false,
+    "importPath": "./js/neededLogPage.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 35,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 17,
+    "kind": "file",
+    "name": "js/objectDefinition.js",
+    "content": "/*\n** JavaScript File\n** Name : objectDefinition.js\n** Start by: Alban Meurice\n** 13/01/2017\n*/\n\n/*\n** Here is declared the object \"MainProject\", \"Project\". It's use for stock information\n** about a Project.\n** Another object \"projectHandler\" is the manager for add project or get information about him.\n*/\n\n/*\n** Here the constructor of the \"Project\" category. During the construction he fill one part of this object\n** with infomation about the project.\n*/\n\nfunction Project(fullNameProject) {\n  this.fullNameProject = fullNameProject;\n  this.nameMain = null;\n  this.nameVersion = null;\n  this.category = null;\n  this.nameSub = null;\n  this.health = null;\n  this.healthDescription = null;\n  this.buildStability = null;\n  this.buildStabilityDescription = null;\n  this.color = null;\n  this.documentation = null;\n  this.numberBuild = null;\n\n  if (fullNameProject.indexOf('_') != -1)\n    {\n      this.category = fullNameProject.substring(0, fullNameProject.indexOf('_'));\n      fullNameProject = fullNameProject.substring(fullNameProject.indexOf('_') + 1);\n    }\n  if (fullNameProject.indexOf('_') != -1)\n    {\n      if (fullNameProject.indexOf(\"BR\") != -1)\n        {\n          this.nameMain = fullNameProject.substring(0, fullNameProject.indexOf(\"BR\") - 1);\n          fullNameProject = fullNameProject.substring(fullNameProject.lastIndexOf(\"BR\") + 3)\n\n        }\n      else\n        {\n          this.nameMain = fullNameProject.substring(0, fullNameProject.lastIndexOf('_'));\n          fullNameProject = fullNameProject.substring(fullNameProject.lastIndexOf('_') + 1);\n        }\n    }\n  this.nameVersion = fullNameProject;\n}\n\nfunction MainProject(project) {\n  this.category = project.category;\n  this.nameProject = project.nameMain;\n  this.listProjects = new Array();\n  this.listProjects.push(project);\n\n  this.addChildProject = function(project) {\n    this.listProjects.push(project);\n  }\n}\n\nfunction projectHandler() {\n    this.listMainProjects = [];\n\n    this.affAllMainProjects = function () {\n\n      var i = 0;\n\n      console.log(\"Debug: Number of MainProjects is : \" + this.listMainProjects.length);\n      for (i = 0; i < this.listMainProjects.length; i++)\n        {\n          console.log(\"Debug: The MainProject number \" + i + \" is : \" + this.listMainProjects[i].nameProject);\n        }\n    };\n\n    this.addProject = function(project) { /* maybe this function don't work correctly */\n\n      var i = 0;\n      var ctrl = 0;\n\n      for (i = 0; i < this.listMainProjects.length && ctrl == 0; i++)\n        if (this.listMainProjects[i].nameProject == project.nameMain && this.listMainProjects[i].category == project.category)\n          {\n            ctrl = 1;\n          }\n\n      if (ctrl == 1)\n        {\n          this.listMainProjects[i-1].addChildProject(project);\n        }\n      else\n        {\n          var mainProject = new MainProject(project);\n          this.listMainProjects.push(mainProject);\n        }\n    };\n\n    this.getCategoryExist = function() {\n\n      var i;\n      var category = new Array();\n\n      for (i = 0; i < this.listMainProjects.length; i++)\n        {\n          if (category.indexOf(this.listMainProjects[i].category) == -1/* &&\n            typeof window.tabProjects[i].category !== 'undefined' maybe useless*/)\n              category.push(this.listMainProjects[i].category);\n        }\n      return (category);\n    };\n\n    this.getAllCategoryProjects = function(category) {\n\n      var i;\n      var namesMainProjects = new Array();\n\n      for (i = 0; i < this.listMainProjects.length; i++)\n        {\n          if (this.listMainProjects[i].category == category)\n            namesMainProjects.push(this.listMainProjects[i].nameProject);\n        }\n      return (namesMainProjects);\n    };\n\n    this.getAllVersion = function(nameMain, category) {\n\n      var i = 0;\n      var tableVersion = [];\n\n      for (i = 0; i < this.listMainProjects.length; i++)\n        {\n          if (this.listMainProjects[i].nameProject == nameMain && this.listMainProjects[i].category == category)\n            tableVersion = this.listMainProjects[i].listProjects;\n        }\n      return (tableVersion);\n    }\n\n}\n",
+    "static": true,
+    "longname": "js/objectDefinition.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 18,
+    "kind": "function",
+    "name": "Project",
+    "memberof": "js/objectDefinition.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/objectDefinition.js~Project",
+    "access": null,
+    "export": false,
+    "importPath": "./js/objectDefinition.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "fullNameProject",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 19,
+    "kind": "function",
+    "name": "MainProject",
+    "memberof": "js/objectDefinition.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/objectDefinition.js~MainProject",
+    "access": null,
+    "export": false,
+    "importPath": "./js/objectDefinition.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 55,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "project",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 20,
+    "kind": "function",
+    "name": "projectHandler",
+    "memberof": "js/objectDefinition.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/objectDefinition.js~projectHandler",
+    "access": null,
+    "export": false,
+    "importPath": "./js/objectDefinition.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 66,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 21,
+    "kind": "file",
+    "name": "js/scriptDynamicElement.js",
+    "content": "/*\n** JavaScript File\n** Name : scriptHealth.js\n** Start by: Alban Meurice\n** 02/03/2017\n*/\n\n/**\n* The three next function manage the div who appear when the mouse in on weather icon.\n*\n*/\nexport function changeInHoverClass(balise) {\n\n  balise.setAttribute(\"class\", \"center-block healthReportHover\");\n  return (true);\n}\n\nfunction changeInHideClass(balise) {\n\n  balise.setAttribute(\"class\", \"center-block healthReportHide\");\n  return (true);\n}\n\n/**\n* This Function is call by the function setImageHealth for create a table with information about the health of project and his build information.\n* This table is only visible when the mouse is above the icone in the column health.\n* @param {Object} project - It's the Object he represent the project. This object have the information about the health and the build stability of the project.\n* \n*/\nfunction createDescriptHealth(project, img_src) {\n\n  var hiddenDiv = document.createElement('div');\n  hiddenDiv.setAttribute(\"class\", \"hiddenDiv\");\n  var para = document.createElement('table');\n  para.setAttribute(\"class\", \"table\");\n  var paraHead = document.createElement('thead');\n  var localLine = paraHead.insertRow(-1);\n  localLine.setAttribute(\"class\", \"tableHead\");\n  var cellLocalLine = localLine.insertCell(0);\n  cellLocalLine.innerHTML += \"W\";\n  cellLocalLine = localLine.insertCell(1);\n  cellLocalLine.innerHTML += \"Description\";\n  cellLocalLine = localLine.insertCell(2);\n  cellLocalLine.innerHTML += \"%\";\n  var paraBody = document.createElement('tbody');\n  localLine = paraBody.insertRow(-1);\n  localLine.setAttribute(\"class\", \"tableLine\");\n  cellLocalLine = localLine.insertCell(0);\n  var localImg = document.createElement(\"img\");\n  localImg.setAttribute(\"src\", \"..\" + img_src.substring(img_src.indexOf(\"/ressources\")));\n  localImg.setAttribute(\"class\", \"center-block\");\n  localImg.setAttribute(\"width\", \"15px\");\n  localImg.setAttribute(\"height\", \"15px\");\n  cellLocalLine.appendChild(localImg);\n  cellLocalLine = localLine.insertCell(1);\n  cellLocalLine.innerHTML += project.healthDescription;\n  cellLocalLine = localLine.insertCell(2);\n  cellLocalLine.innerHTML += project.health;\n  if (project.buildStability != null)\n    {\n      localLine = paraBody.insertRow(-1);\n      localLine.setAttribute(\"class\", \"tableLine\");\n      cellLocalLine = localLine.insertCell(0);\n      var localImg2 = document.createElement(\"img\");\n      if (project.buildStability != null)\n        {\n          if (project.buildStability > 80)\n            localImg2.setAttribute(\"src\", \"../ressources/veryGoodHealth.png\");\n          else if (project.buildStability > 60 && project.buildStability <= 80)\n            localImg2.setAttribute(\"src\", \"../ressources/goodHealth.png\");\n          else if (project.buildStability > 40 && project.buildStability <= 60)\n            localImg2.setAttribute(\"src\", \"../ressources/mediumHealth.png\");\n          else if (project.buildStability > 20 && project.buildStability <= 40)\n            localImg2.setAttribute(\"src\", \"../ressources/badHealth.png\");\n          else if (project.buildStability <= 20)\n            localImg2.setAttribute(\"src\", \"../ressources/veryBadHealth.png\");\n        }\n      else\n        localImg2.setAttribute(\"src\", \"../ressources/veryGoodHealth.png\");\n      localImg2.setAttribute(\"class\", \"center-block\");\n      localImg2.setAttribute(\"width\", \"15px\");\n      localImg2.setAttribute(\"height\", \"15px\");\n      cellLocalLine.appendChild(localImg2);\n      cellLocalLine = localLine.insertCell(1);\n      cellLocalLine.innerHTML += project.buildStabilityDescription;\n      cellLocalLine = localLine.insertCell(2);\n      cellLocalLine.innerHTML += project.buildStability;\n    }\n\n  para.appendChild(paraHead);\n  para.appendChild(paraBody);\n  hiddenDiv.appendChild(para);\n  return (hiddenDiv);\n}\n",
+    "static": true,
+    "longname": "js/scriptDynamicElement.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 22,
+    "kind": "function",
+    "name": "changeInHoverClass",
+    "memberof": "js/scriptDynamicElement.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/scriptDynamicElement.js~changeInHoverClass",
+    "access": null,
+    "export": true,
+    "importPath": "./js/scriptDynamicElement.js",
+    "importStyle": "{changeInHoverClass}",
+    "description": "The three next function manage the div who appear when the mouse in on weather icon.",
+    "lineNumber": 12,
+    "params": [
+      {
+        "name": "balise",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 23,
+    "kind": "function",
+    "name": "changeInHideClass",
+    "memberof": "js/scriptDynamicElement.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/scriptDynamicElement.js~changeInHideClass",
+    "access": null,
+    "export": false,
+    "importPath": "./js/scriptDynamicElement.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 18,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "balise",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 24,
+    "kind": "function",
+    "name": "createDescriptHealth",
+    "memberof": "js/scriptDynamicElement.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/scriptDynamicElement.js~createDescriptHealth",
+    "access": null,
+    "export": false,
+    "importPath": "./js/scriptDynamicElement.js",
+    "importStyle": null,
+    "description": "This Function is call by the function setImageHealth for create a table with information about the health of project and his build information.\nThis table is only visible when the mouse is above the icone in the column health.",
+    "lineNumber": 30,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "project",
+        "description": "It's the Object he represent the project. This object have the information about the health and the build stability of the project."
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 25,
+    "kind": "file",
+    "name": "js/scriptGetAndSet.js",
+    "content": "/*\n** JavaScript File\n** Name : scriptHealth.js\n** Start by: Alban Meurice\n** 06/01/2017\n*/\n\n\n/**\n* The function getHealthMain get the score and the description of health for a project.\n* @param {XMLHttpRequest} xhr - The XMLHttpRequest where the data is stock.\n* @param {Object} project - The Project who receive the information about score and description.\n*/\nexport function gethealthMain(xhr, project) {\n\n  var healthInfo = xhr.responseXML.querySelectorAll(\"score\") !== null;\n  if (healthInfo == true)\n    {\n      var healthInfo = xhr.responseXML.querySelectorAll(\"score\");\n      if (healthInfo[0] != null)\n        project.health = healthInfo[0].textContent;\n      if (healthInfo[1] != null)\n        project.buildStability = healthInfo[1].textContent;\n    }\n  var descriptionInfo = xhr.responseXML.querySelectorAll(\"description\") !== null;\n  if (descriptionInfo == true)\n    {\n      descriptionInfo = xhr.responseXML.querySelectorAll(\"description\");\n      if (descriptionInfo[0] != null)\n        project.healthDescription = descriptionInfo[0].textContent;\n      if (descriptionInfo[1] != null)\n        project.buildStabilityDescription = descriptionInfo[1].textContent;\n    }\n}\n\n/**\n* The function setImageHealth get the state of health for a project and\n* she create an insert an image for illustrate the state of health of project.\n* @param {HtmlObject} cell - It's the cellule of the html tab where the function set the image.\n* @param {Object} project - It's the Object he represent the project. This object have the information about the health of the project.\n*/\nexport function setImageHealth(cell, project)\n{\n  var img = document.createElement('img');\n\n  if (project.health != null)\n  {\n      if (project.health > 80)\n        img.setAttribute(\"src\", \"../ressources/veryGoodHealth.png\");\n      else if (project.health > 60 && project.health <= 80)\n        img.setAttribute(\"src\", \"../ressources/goodHealth.png\");\n      else if (project.health > 40 && project.health <= 60)\n        img.setAttribute(\"src\", \"../ressources/mediumHealth.png\");\n      else if (project.health > 20 && project.health <= 40)\n        img.setAttribute(\"src\", \"../ressources/badHealth.png\");\n      else if (project.health <= 20)\n        img.setAttribute(\"src\", \"../ressources/veryBadHealth.png\");\n    }\n  else\n    img.setAttribute(\"src\", \"../ressources/veryGoodHealth.png\");\n  img.setAttribute(\"class\", \"center-block healthReportHide\");\n  img.setAttribute(\"width\", \"25px\");\n  img.setAttribute(\"height\", \"25px\");\n  img.setAttribute(\"onmouseover\", \"changeInHoverClass(this)\");\n  img.setAttribute(\"onmouseout\", \"changeInHideClass(this)\");\n\n  cell.appendChild(img);\n  cell.appendChild(createDescriptHealth(project, img.src));\n}\n\n/**\n* The next Function set a image with different color in terms of the status of build.\n* @param {HtmlObject} cell - It's the cellule of the html tab where the function set the image.\n* @param {Object} project - It's the Object he represent the project. This object have the information about the build result of the project.\n*/\nexport function setImageBuildResult(cell, project)\n{\n  var img = document.createElement('img');\n  if (project.color == \"blue\")\n    img.setAttribute('src', '../ressources/blue.png');\n  else if (project.color == \"red\")\n    img.setAttribute('src', '../ressources/red.png');\n  else\n    img.setAttribute('src', '../ressources/grey.png');\n  img.setAttribute('class', 'center-block');\n  img.setAttribute('width', '25px');\n  img.setAttribute('height', '25px');\n  cell.appendChild(img);\n}\n\n/**\n* The next function test if a documentation exist for the Project.\n* If a Documentation exist the function create an image with link to the documentation for the project.\n* @param {HtmlObject} cell - It's the cellule of the html tab where the function set the image.\n* @param {Object} project - It's the Object he represent the project. This object have the information about the documentation of the project.\n*/\nexport function getImageDocumentation(cell, project)\n{\n  var xhr3 = new XMLHttpRequest();\n\n  xhr3.onreadystatechange = function() {\n    if (xhr3.readyState === 4) {\n\n      var img = document.createElement('img');\n      var linkA = document.createElement('a');\n\n      if (xhr3.status === 200) {\n\n        var XMLText = stringToXml(xhr3.responseText);\n        /*window.myArray = XMLText.querySelectorAll('a');//what ?*/\n        img.setAttribute(\"class\", \"center-block\");\n        img.setAttribute(\"src\", \"../ressources/file.svg\");\n        img.setAttribute(\"width\", \"25px\");\n        img.setAttribute(\"height\", \"25px\");\n        linkA.setAttribute(\"href\", urlDoc);\n        linkA.appendChild(img);\n        project.documentation = urlDoc;\n        cell.appendChild(linkA);\n      }\n      else if (xhr3.status === 404) {\n\n        img.setAttribute(\"class\", \"center-block\");\n        img.setAttribute(\"src\", \"../ressources/RedX.ico\");\n        img.setAttribute(\"width\", \"25px\");\n        img.setAttribute(\"height\", \"25px\");\n        cell.appendChild(img);\n      }\n\n    }\n  };\n\n  var urlDoc = window.addrServer + \"jenkins/job/\";\n  urlDoc += project.fullNameProject + '/doxygen/';\n\n  xhr3.withCredentials = true;\n  xhr3.open(\"GET\", urlDoc);\n  xhr3.send();\n}\n\n/**\n* The next function test if a Repository or/and SonarQube exist for the Project.\n* If repository or/and SonarQube exist the function create an image for each of them with the link for go to the page.\n* @param {HtmlObject} cell - It's the cellule of the html tab where the function set the image.\n* @param {HtmlObject} cellSonar - It's the cellule of the html tab where the function set the image and the link if a SonarQube exist for the current project.\n* @param {Object} project - It's the Object he represent the project. This object have the information about the SonarQube of the project.\n*/\nexport function getRepository(project, cell, cellSonar) {\n\n  var xhr4 = new XMLHttpRequest();\n\n  if (project.numberBuild != null)\n    {\n      var urlBuildProject = window.addrServer + \"jenkins/job/\";\n      urlBuildProject += project.fullNameProject + \"/\" + project.numberBuild + \"/api/xml\";\n      xhr4.withCredentials = true;\n      xhr4.open(\"GET\", urlBuildProject);\n      xhr4.send();\n    }\n\n    xhr4.onreadystatechange = function() {\n      if (xhr4.readyState === 4) {\n        if (xhr4.status === 200) {\n\n          var typeRepo = xhr4.responseXML.querySelector(\"kind\");\n          var imgA = document.createElement('img');\n          var imgB = document.createElement('img');\n          var linkA = document.createElement('a');\n          var linkB = document.createElement('a');\n          if (typeRepo != null)\n            {\n              var urlRepo;\n              if (typeRepo.textContent == \"svn\")\n                urlRepo = xhr4.responseXML.querySelector(\"module\");\n              else if (typeRepo.textContent == \"git\")\n                urlRepo = xhr4.responseXML.querySelector(\"remoteUrl\");\n              if (urlRepo != null)\n                {\n                  if (typeRepo.textContent == \"svn\")\n                    imgA.setAttribute(\"src\", \"../ressources/svn.png\");\n                  else if (typeRepo.textContent == \"git\")\n                    imgA.setAttribute(\"src\", \"../ressources/github-logo.svg\");\n                  imgA.setAttribute(\"class\", \"center-block\");\n                  imgA.setAttribute(\"width\", \"25px\");\n                  imgA.setAttribute(\"height\", \"25px\");\n                  linkA.setAttribute(\"href\", urlRepo.textContent.substr(0, (urlRepo.textContent.length - 4)));\n                  linkA.appendChild(imgA);\n                  cell.appendChild(linkA);\n                }\n            }\n          sonarResult = xhr4.responseXML.querySelector(\"sonarqubeDashboardUrl\");\n          if (sonarResult != null)\n            {\n              imgB.setAttribute(\"src\", \"../ressources/SonarQube.png\");\n              imgB.setAttribute(\"class\", \"center-block\");\n              imgB.setAttribute(\"width\", \"25px\");\n              imgB.setAttribute(\"height\", \"25px\");\n              linkB.setAttribute(\"href\", sonarResult.textContent);\n              linkB.appendChild(imgB);\n              cellSonar.appendChild(linkB);\n            }\n        }\n      }\n    };\n  }\n\n\n/**\n* This function get the number of the build for a project\n* @param {XMLHttpRequest} xhr - The xhr variable is the variable where the data receive by the XMLHttpRequest is save.\n*/\nexport function getNumberBuild(xhr) {\n\n  var number = xhr.responseXML.querySelector(\"number\") !== null;\n  if (number == true)\n    {\n      var number = xhr.responseXML.querySelector(\"number\").textContent;\n      return (number);\n    }\n}\n\n/**\n* This function get the Test result page for a project if the Tests result page exist.\n* If a Page with the result of test exist the function create an image with the link of the page for the project.\n* @param {HtmlObject} cell - It's the cellule of the html tab where the function set the image and the link for acces at the documentation.\n* @param {Object} project - It's the Object he represent the project. This object have the information about the documentation of the project.\n*/\nexport function getTestResult(cell, project) {\n\n  var xhr5 = new XMLHttpRequest();\n\n  var urlTest = window.addrServer + \"jenkins/job/\";\n  urlTest += project.fullNameProject + \"/\" + project.numberBuild + \"/testReport/api/xml\";\n  xhr5.withCredentials = true;\n  xhr5.open(\"GET\", urlTest);\n  xhr5.send();\n\n  xhr5.onreadystatechange = function() {\n    if (xhr5.readyState === 4) {\n      if (xhr5.status === 200) {\n\n        var baliseImg = document.createElement(\"img\");\n        var baliseRef = document.createElement(\"a\");\n        baliseImg.setAttribute(\"src\", \"../ressources/Report.jpg\");\n        baliseImg.setAttribute(\"class\", \"center-block\");\n        baliseImg.setAttribute(\"width\", \"25px\");\n        baliseImg.setAttribute(\"height\", \"25px\");\n        urlTest = urlTest.replace(\"/api/xml\", \"\");\n        baliseRef.setAttribute(\"href\", urlTest);\n        baliseRef.appendChild(baliseImg);\n        cell.appendChild(baliseRef);\n      }\n    }\n  };\n}\n\n/**\n* The function stringToXml convert a text document in XML document.\n* @param {String} textToParse - This argument is the text you want transform in XML document.\n*/\nexport function stringToXml(textToParse) {\n    return (new DOMParser()).parseFromString(textToParse, \"text/xml\");\n}\n",
+    "static": true,
+    "longname": "js/scriptGetAndSet.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 26,
+    "kind": "function",
+    "name": "gethealthMain",
+    "memberof": "js/scriptGetAndSet.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/scriptGetAndSet.js~gethealthMain",
+    "access": null,
+    "export": true,
+    "importPath": "./js/scriptGetAndSet.js",
+    "importStyle": "{gethealthMain}",
+    "description": "The function getHealthMain get the score and the description of health for a project.",
+    "lineNumber": 14,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "XMLHttpRequest"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "xhr",
+        "description": "The XMLHttpRequest where the data is stock."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "project",
+        "description": "The Project who receive the information about score and description."
+      }
+    ]
+  },
+  {
+    "__docId__": 27,
+    "kind": "function",
+    "name": "setImageHealth",
+    "memberof": "js/scriptGetAndSet.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/scriptGetAndSet.js~setImageHealth",
+    "access": null,
+    "export": true,
+    "importPath": "./js/scriptGetAndSet.js",
+    "importStyle": "{setImageHealth}",
+    "description": "The function setImageHealth get the state of health for a project and\nshe create an insert an image for illustrate the state of health of project.",
+    "lineNumber": 42,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "HtmlObject"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "cell",
+        "description": "It's the cellule of the html tab where the function set the image."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "project",
+        "description": "It's the Object he represent the project. This object have the information about the health of the project."
+      }
+    ]
+  },
+  {
+    "__docId__": 28,
+    "kind": "function",
+    "name": "setImageBuildResult",
+    "memberof": "js/scriptGetAndSet.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/scriptGetAndSet.js~setImageBuildResult",
+    "access": null,
+    "export": true,
+    "importPath": "./js/scriptGetAndSet.js",
+    "importStyle": "{setImageBuildResult}",
+    "description": "The next Function set a image with different color in terms of the status of build.",
+    "lineNumber": 76,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "HtmlObject"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "cell",
+        "description": "It's the cellule of the html tab where the function set the image."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "project",
+        "description": "It's the Object he represent the project. This object have the information about the build result of the project."
+      }
+    ]
+  },
+  {
+    "__docId__": 29,
+    "kind": "function",
+    "name": "getImageDocumentation",
+    "memberof": "js/scriptGetAndSet.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/scriptGetAndSet.js~getImageDocumentation",
+    "access": null,
+    "export": true,
+    "importPath": "./js/scriptGetAndSet.js",
+    "importStyle": "{getImageDocumentation}",
+    "description": "The next function test if a documentation exist for the Project.\nIf a Documentation exist the function create an image with link to the documentation for the project.",
+    "lineNumber": 97,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "HtmlObject"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "cell",
+        "description": "It's the cellule of the html tab where the function set the image."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "project",
+        "description": "It's the Object he represent the project. This object have the information about the documentation of the project."
+      }
+    ]
+  },
+  {
+    "__docId__": 30,
+    "kind": "function",
+    "name": "getRepository",
+    "memberof": "js/scriptGetAndSet.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/scriptGetAndSet.js~getRepository",
+    "access": null,
+    "export": true,
+    "importPath": "./js/scriptGetAndSet.js",
+    "importStyle": "{getRepository}",
+    "description": "The next function test if a Repository or/and SonarQube exist for the Project.\nIf repository or/and SonarQube exist the function create an image for each of them with the link for go to the page.",
+    "lineNumber": 147,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "HtmlObject"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "cell",
+        "description": "It's the cellule of the html tab where the function set the image."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "HtmlObject"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "cellSonar",
+        "description": "It's the cellule of the html tab where the function set the image and the link if a SonarQube exist for the current project."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "project",
+        "description": "It's the Object he represent the project. This object have the information about the SonarQube of the project."
+      }
+    ]
+  },
+  {
+    "__docId__": 31,
+    "kind": "function",
+    "name": "getNumberBuild",
+    "memberof": "js/scriptGetAndSet.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/scriptGetAndSet.js~getNumberBuild",
+    "access": null,
+    "export": true,
+    "importPath": "./js/scriptGetAndSet.js",
+    "importStyle": "{getNumberBuild}",
+    "description": "This function get the number of the build for a project",
+    "lineNumber": 211,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "XMLHttpRequest"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "xhr",
+        "description": "The xhr variable is the variable where the data receive by the XMLHttpRequest is save."
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 32,
+    "kind": "function",
+    "name": "getTestResult",
+    "memberof": "js/scriptGetAndSet.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/scriptGetAndSet.js~getTestResult",
+    "access": null,
+    "export": true,
+    "importPath": "./js/scriptGetAndSet.js",
+    "importStyle": "{getTestResult}",
+    "description": "This function get the Test result page for a project if the Tests result page exist.\nIf a Page with the result of test exist the function create an image with the link of the page for the project.",
+    "lineNumber": 227,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "HtmlObject"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "cell",
+        "description": "It's the cellule of the html tab where the function set the image and the link for acces at the documentation."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "project",
+        "description": "It's the Object he represent the project. This object have the information about the documentation of the project."
+      }
+    ]
+  },
+  {
+    "__docId__": 33,
+    "kind": "function",
+    "name": "stringToXml",
+    "memberof": "js/scriptGetAndSet.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "js/scriptGetAndSet.js~stringToXml",
+    "access": null,
+    "export": true,
+    "importPath": "./js/scriptGetAndSet.js",
+    "importStyle": "{stringToXml}",
+    "description": "The function stringToXml convert a text document in XML document.",
+    "lineNumber": 260,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "textToParse",
+        "description": "This argument is the text you want transform in XML document."
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 35,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 54,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 60,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 80,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 86,
+    "kind": "external",
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 89,
+    "kind": "external",
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 90,
+    "kind": "external",
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true
+  }
+]

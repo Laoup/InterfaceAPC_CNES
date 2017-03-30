@@ -6767,6 +6767,10 @@ footer {
   padding: 40px 0 10px;
 }
 
+body > div:first-child {
+  height: 10vh;
+}
+
 .text-white {
   color: #fff;
 }
@@ -6775,20 +6779,28 @@ footer {
   margin-bottom: 2%;
 }
 
-table {
+#MainTableDiv > table {
   border-collapse: collapse;
   border-spacing: 0;
-  height: 450px;
+  height: 90vh;
+  margin-bottom: 0;
+  /*height: 450px;*/
 }
 
-thead {
+#MainTableDiv > table > thead {
   width: calc(100% - 17px);
-  height: 70px;
+  height: 10vh;
+  /*height: 70px;*/
 }
 
-thead, tbody, tr, td, th { display: block; }
+#MainTableDiv > table > thead, #MainTableDiv > table > tbody,
+#MainTableDiv > table > thead > tr, #MainTableDiv > table > tbody > tr,
+#MainTableDiv > table > thead > tr > td, #MainTableDiv > table > thead > tr > th {
 
-tr:after
+  display: block;
+}
+
+#MainTableDiv > table > thead > tr:after, #MainTableDiv > table > tbody > tr:after
 {
             content: ' ';
             display: block;
@@ -6796,21 +6808,27 @@ tr:after
             clear: both;
 }
 
-tbody {
-            height: 380px;
-            overflow-y: auto;
-        }
+#MainTableDiv > table > tbody {
+  height: 79vh;
+  overflow-y: auto;
+  /*height: 380px;*/
+  /*overflow-y: auto;*/
+      }
 
-tbody tr td, thead th {
-                    width: 13%;
-                    float: left;
-                }
+#MainTableDiv > table > tbody > tr > td,
+#MainTableDiv > table > thead > tr > th
+{
+  width: 13%;
+  float: left;
+}
 
-thead th:first-child, tbody tr td:first-child {
+#MainTableDiv > table > thead > tr > th:first-child,
+#MainTableDiv > table > tbody > tr > td:first-child {
   width: 20%
 }
 
-thead th:last-child, tbody tr td:last-child
+#MainTableDiv > table > thead > tr > th:last-child,
+#MainTableDiv > table > tbody > tr > td:last-child
 {
   width: 15%;
 }
@@ -6820,8 +6838,9 @@ td {
 }
 
 #MainTableDiv {
-  margin-bottom: 100px;
-  height: 450px;
+  height: 90vh;
+  /*margin-bottom: 100px;
+  height: 450px;*/
 /*  overflow: hidden;
   clear: both;*/
 }
@@ -6882,4 +6901,17 @@ td .projectVersion {
 
 .healthReportHover + .hiddenDiv .tableLine{
   background-color: #FFD267;
+}
+
+/* The two next class is for calibrate the scroll bar for Mac */
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 17px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }

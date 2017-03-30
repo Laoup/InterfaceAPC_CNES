@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowlCategory">rowlCategory</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowlProject">rowlProject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fillTab">fillTab</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-changeInHoverClass">changeInHoverClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getImageDocumentation">getImageDocumentation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNumberBuild">getNumberBuild</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRepository">getRepository</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getTestResult">getTestResult</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gethealthMain">gethealthMain</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setImageBuildResult">setImageBuildResult</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setImageHealth">setImageHealth</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stringToXml">stringToXml</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="codeenlight-documentation">CodeenLight Documentation</h1>
+<p>Bienvenue dans la documentation CodeenLight.</p>
+<p>Vous trouverez ici quelques informations sur l&apos;architecture du Projet ainsi que des explications &#xE0; propos de comment fonctionne le code (JS nottament).</p>
+<hr>
+<h4 id="technologies-utilis-es">Technologies utilis&#xE9;es</h4>
+<ul>
+<li>HTML.</li>
+<li>CSS.</li>
+<li>JS(AJAX).</li>
+<li>API JENKINS.</li>
+</ul>
+<hr>
+<h4 id="architecture-du-projet">Architecture du Projet</h4>
+<p>CSS &#x2192; Bootstrap (Tout le code Css de la page)</p>
+<p>|</p>
+<p>|</p>
+<p>|</p>
+<p>HTML &#x2192; index.html (La page html de CodeenLight)</p>
+<p>|</p>
+<p>|</p>
+<p>|</p>
+<p>JS  &#x2192; (Tout les fichiers contenant les script Js n&#xE9;c&#xE9;ssaire a CodeenLight)</p>
+<p>|   | &#x2192; functionFillTab.js</p>
+<p>|   | &#x2192; interfaceJenkins.js</p>
+<p>|   | &#x2192; objectDefinition.js</p>
+<p>|   | &#x2192; scriptDynamicElement.js</p>
+<p>|   | &#x2192; scriptGetAndSet.js</p>
+<p>|   | &#x2192; neededLogPage.js (Useless)</p>
+<p>|</p>
+<p>|</p>
+<p>|</p>
+<p>Ressources &#x2192; Toutes les ressources .png .jpg ...etc</p>
+<p>|        | &#x2192; configFile.xml (le fichier de configuration pour dire au code Js sur quel serveur faire les requ&#xEA;tes AJAX)</p>
+<p>|</p>
+<p>|</p>
+<p>Design &#x2192; Les fichiers a ajouter a Jenkins pour ajouter CodeenLight dans la navbar Jenkins.</p>
+<p>|      | &#x2192; customCodeen.js</p>
+<p>|      | &#x2192; Codeennewstyle.css</p>
+<p>|      | &#x2192; CodeenLightLogo.jpg </p>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

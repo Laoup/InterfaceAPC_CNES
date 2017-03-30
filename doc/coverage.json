@@ -1,0 +1,27 @@
+{
+  "coverage": "100%",
+  "expectCount": 12,
+  "actualCount": 12,
+  "files": {
+    "js/scriptDynamicElement.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "js/interfaceJenkins.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "js/scriptGetAndSet.js": {
+      "expectCount": 8,
+      "actualCount": 8,
+      "undocumentLines": []
+    },
+    "js/functionFillTab.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    }
+  }
+}

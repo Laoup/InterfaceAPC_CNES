@@ -26,12 +26,11 @@ loadingIconeTarget.appendChild(loadingIcone);
 xhrInit.open("GET", "../ressources/configFile.xml")
 xhrInit.send();
 
-/*
-** The following code is use for prepare and use the request needed for get the Jenkins information.
-** The function getALLOU is use for put the projects into a table of MainProject and get information
-** about their status.
+/**
+* @desc The following code is use for prepare and use the request needed for get the Jenkins information.
+* The function getALLOU is use for put the projects into a table of MainProject and get information
+* about their status.
 */
-
 xhrInit.onreadystatechange = function() {
   if (xhrInit.readyState === 4) {
     if (xhrInit.status === 200) {
@@ -94,6 +93,7 @@ xhrInit.onreadystatechange = function() {
 
                   }
               }
+
             getAllOU(tabName);
 
             function fillAll() {
@@ -112,11 +112,11 @@ xhrInit.onreadystatechange = function() {
   }
 };
 
-/*
-** The next function is used for fill the dashboard with the names of categories of all the projects.
+/**
+* The next function is used for fill the dashboard with the names of categories of all the projects.
+* @param {Array} category - The variable category is a Array of all category you want display on the dasboard at the first level.
 */
-
-function fillTab(category) {
+/*export*/ function fillTab(category) {
 
   var tabHtml = document.getElementById('MainTableBody');
   var loadingIcone = document.getElementById("loadingIcone");

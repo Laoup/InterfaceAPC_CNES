@@ -5,12 +5,12 @@
 ** 22/12/2016
 */
 
-/*
-** The function rowlCategory manage the appear of the plus and minus logo for the top level(->CategoryName).
-** Her manage also the display of name of projects for the middleLevel(->ProjectsName).
+/**
+* The function rowlCategory manage the appear of the plus and minus logo for the top level(->CategoryName).
+* Her manage also the display of name of projects for the middleLevel(->ProjectsName).
+* @param {HtmlObject} balise - balise is the result of the call this function by a onClick html with a param "this". It's mean arg balise is the balise html reference.
 */
-
-function rowlCategory(balise) {
+/*export*/ function rowlCategory(balise) {
 
   var tabHtml = document.getElementById('MainTableBody');
   var childTabHtml = tabHtml.childNodes;
@@ -60,13 +60,13 @@ function rowlCategory(balise) {
     }
 }
 
-/*
-** The function rowl manage the appear of the plus and minus logo for the middle level(->ProjectName).
-** Her manage also the display of information about each project version and the display of the
-** projects themselves.
+/**
+* The function rowl manage the appear of the plus and minus logo for the middle level(->ProjectName).
+* Her manage also the display of information about each project version and the display of the
+* projects themselves.
+* @param {HtmlObject} balise - balise is the result of the call this function by a onClick html with a param "this". It's mean arg balise is the balise html reference.
 */
-
-function rowlProject(balise) {
+/*export*/ function rowlProject(balise) {
 
   var tabHtml = document.getElementById('MainTableBody');
   var childTabHtml = tabHtml.childNodes;

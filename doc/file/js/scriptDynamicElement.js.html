@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">js/scriptDynamicElement.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowlCategory">rowlCategory</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowlProject">rowlProject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fillTab">fillTab</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-changeInHoverClass">changeInHoverClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getImageDocumentation">getImageDocumentation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNumberBuild">getNumberBuild</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRepository">getRepository</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getTestResult">getTestResult</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gethealthMain">gethealthMain</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setImageBuildResult">setImageBuildResult</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setImageHealth">setImageHealth</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stringToXml">stringToXml</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">js/scriptDynamicElement.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*
+** JavaScript File
+** Name : scriptHealth.js
+** Start by: Alban Meurice
+** 02/03/2017
+*/
+
+/**
+* The three next function manage the div who appear when the mouse in on weather icon.
+*
+*/
+export function changeInHoverClass(balise) {
+
+  balise.setAttribute(&quot;class&quot;, &quot;center-block healthReportHover&quot;);
+  return (true);
+}
+
+function changeInHideClass(balise) {
+
+  balise.setAttribute(&quot;class&quot;, &quot;center-block healthReportHide&quot;);
+  return (true);
+}
+
+/**
+* This Function is call by the function setImageHealth for create a table with information about the health of project and his build information.
+* This table is only visible when the mouse is above the icone in the column health.
+* @param {Object} project - It&apos;s the Object he represent the project. This object have the information about the health and the build stability of the project.
+* 
+*/
+function createDescriptHealth(project, img_src) {
+
+  var hiddenDiv = document.createElement(&apos;div&apos;);
+  hiddenDiv.setAttribute(&quot;class&quot;, &quot;hiddenDiv&quot;);
+  var para = document.createElement(&apos;table&apos;);
+  para.setAttribute(&quot;class&quot;, &quot;table&quot;);
+  var paraHead = document.createElement(&apos;thead&apos;);
+  var localLine = paraHead.insertRow(-1);
+  localLine.setAttribute(&quot;class&quot;, &quot;tableHead&quot;);
+  var cellLocalLine = localLine.insertCell(0);
+  cellLocalLine.innerHTML += &quot;W&quot;;
+  cellLocalLine = localLine.insertCell(1);
+  cellLocalLine.innerHTML += &quot;Description&quot;;
+  cellLocalLine = localLine.insertCell(2);
+  cellLocalLine.innerHTML += &quot;%&quot;;
+  var paraBody = document.createElement(&apos;tbody&apos;);
+  localLine = paraBody.insertRow(-1);
+  localLine.setAttribute(&quot;class&quot;, &quot;tableLine&quot;);
+  cellLocalLine = localLine.insertCell(0);
+  var localImg = document.createElement(&quot;img&quot;);
+  localImg.setAttribute(&quot;src&quot;, &quot;..&quot; + img_src.substring(img_src.indexOf(&quot;/ressources&quot;)));
+  localImg.setAttribute(&quot;class&quot;, &quot;center-block&quot;);
+  localImg.setAttribute(&quot;width&quot;, &quot;15px&quot;);
+  localImg.setAttribute(&quot;height&quot;, &quot;15px&quot;);
+  cellLocalLine.appendChild(localImg);
+  cellLocalLine = localLine.insertCell(1);
+  cellLocalLine.innerHTML += project.healthDescription;
+  cellLocalLine = localLine.insertCell(2);
+  cellLocalLine.innerHTML += project.health;
+  if (project.buildStability != null)
+    {
+      localLine = paraBody.insertRow(-1);
+      localLine.setAttribute(&quot;class&quot;, &quot;tableLine&quot;);
+      cellLocalLine = localLine.insertCell(0);
+      var localImg2 = document.createElement(&quot;img&quot;);
+      if (project.buildStability != null)
+        {
+          if (project.buildStability &gt; 80)
+            localImg2.setAttribute(&quot;src&quot;, &quot;../ressources/veryGoodHealth.png&quot;);
+          else if (project.buildStability &gt; 60 &amp;&amp; project.buildStability &lt;= 80)
+            localImg2.setAttribute(&quot;src&quot;, &quot;../ressources/goodHealth.png&quot;);
+          else if (project.buildStability &gt; 40 &amp;&amp; project.buildStability &lt;= 60)
+            localImg2.setAttribute(&quot;src&quot;, &quot;../ressources/mediumHealth.png&quot;);
+          else if (project.buildStability &gt; 20 &amp;&amp; project.buildStability &lt;= 40)
+            localImg2.setAttribute(&quot;src&quot;, &quot;../ressources/badHealth.png&quot;);
+          else if (project.buildStability &lt;= 20)
+            localImg2.setAttribute(&quot;src&quot;, &quot;../ressources/veryBadHealth.png&quot;);
+        }
+      else
+        localImg2.setAttribute(&quot;src&quot;, &quot;../ressources/veryGoodHealth.png&quot;);
+      localImg2.setAttribute(&quot;class&quot;, &quot;center-block&quot;);
+      localImg2.setAttribute(&quot;width&quot;, &quot;15px&quot;);
+      localImg2.setAttribute(&quot;height&quot;, &quot;15px&quot;);
+      cellLocalLine.appendChild(localImg2);
+      cellLocalLine = localLine.insertCell(1);
+      cellLocalLine.innerHTML += project.buildStabilityDescription;
+      cellLocalLine = localLine.insertCell(2);
+      cellLocalLine.innerHTML += project.buildStability;
+    }
+
+  para.appendChild(paraHead);
+  para.appendChild(paraBody);
+  hiddenDiv.appendChild(para);
+  return (hiddenDiv);
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

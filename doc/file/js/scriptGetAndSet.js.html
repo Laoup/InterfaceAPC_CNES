@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">js/scriptGetAndSet.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowlCategory">rowlCategory</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowlProject">rowlProject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fillTab">fillTab</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-changeInHoverClass">changeInHoverClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getImageDocumentation">getImageDocumentation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNumberBuild">getNumberBuild</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRepository">getRepository</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getTestResult">getTestResult</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gethealthMain">gethealthMain</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setImageBuildResult">setImageBuildResult</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setImageHealth">setImageHealth</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stringToXml">stringToXml</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">js/scriptGetAndSet.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*
+** JavaScript File
+** Name : scriptHealth.js
+** Start by: Alban Meurice
+** 06/01/2017
+*/
+
+
+/**
+* The function getHealthMain get the score and the description of health for a project.
+* @param {XMLHttpRequest} xhr - The XMLHttpRequest where the data is stock.
+* @param {Object} project - The Project who receive the information about score and description.
+*/
+export function gethealthMain(xhr, project) {
+
+  var healthInfo = xhr.responseXML.querySelectorAll(&quot;score&quot;) !== null;
+  if (healthInfo == true)
+    {
+      var healthInfo = xhr.responseXML.querySelectorAll(&quot;score&quot;);
+      if (healthInfo[0] != null)
+        project.health = healthInfo[0].textContent;
+      if (healthInfo[1] != null)
+        project.buildStability = healthInfo[1].textContent;
+    }
+  var descriptionInfo = xhr.responseXML.querySelectorAll(&quot;description&quot;) !== null;
+  if (descriptionInfo == true)
+    {
+      descriptionInfo = xhr.responseXML.querySelectorAll(&quot;description&quot;);
+      if (descriptionInfo[0] != null)
+        project.healthDescription = descriptionInfo[0].textContent;
+      if (descriptionInfo[1] != null)
+        project.buildStabilityDescription = descriptionInfo[1].textContent;
+    }
+}
+
+/**
+* The function setImageHealth get the state of health for a project and
+* she create an insert an image for illustrate the state of health of project.
+* @param {HtmlObject} cell - It&apos;s the cellule of the html tab where the function set the image.
+* @param {Object} project - It&apos;s the Object he represent the project. This object have the information about the health of the project.
+*/
+export function setImageHealth(cell, project)
+{
+  var img = document.createElement(&apos;img&apos;);
+
+  if (project.health != null)
+  {
+      if (project.health &gt; 80)
+        img.setAttribute(&quot;src&quot;, &quot;../ressources/veryGoodHealth.png&quot;);
+      else if (project.health &gt; 60 &amp;&amp; project.health &lt;= 80)
+        img.setAttribute(&quot;src&quot;, &quot;../ressources/goodHealth.png&quot;);
+      else if (project.health &gt; 40 &amp;&amp; project.health &lt;= 60)
+        img.setAttribute(&quot;src&quot;, &quot;../ressources/mediumHealth.png&quot;);
+      else if (project.health &gt; 20 &amp;&amp; project.health &lt;= 40)
+        img.setAttribute(&quot;src&quot;, &quot;../ressources/badHealth.png&quot;);
+      else if (project.health &lt;= 20)
+        img.setAttribute(&quot;src&quot;, &quot;../ressources/veryBadHealth.png&quot;);
+    }
+  else
+    img.setAttribute(&quot;src&quot;, &quot;../ressources/veryGoodHealth.png&quot;);
+  img.setAttribute(&quot;class&quot;, &quot;center-block healthReportHide&quot;);
+  img.setAttribute(&quot;width&quot;, &quot;25px&quot;);
+  img.setAttribute(&quot;height&quot;, &quot;25px&quot;);
+  img.setAttribute(&quot;onmouseover&quot;, &quot;changeInHoverClass(this)&quot;);
+  img.setAttribute(&quot;onmouseout&quot;, &quot;changeInHideClass(this)&quot;);
+
+  cell.appendChild(img);
+  cell.appendChild(createDescriptHealth(project, img.src));
+}
+
+/**
+* The next Function set a image with different color in terms of the status of build.
+* @param {HtmlObject} cell - It&apos;s the cellule of the html tab where the function set the image.
+* @param {Object} project - It&apos;s the Object he represent the project. This object have the information about the build result of the project.
+*/
+export function setImageBuildResult(cell, project)
+{
+  var img = document.createElement(&apos;img&apos;);
+  if (project.color == &quot;blue&quot;)
+    img.setAttribute(&apos;src&apos;, &apos;../ressources/blue.png&apos;);
+  else if (project.color == &quot;red&quot;)
+    img.setAttribute(&apos;src&apos;, &apos;../ressources/red.png&apos;);
+  else
+    img.setAttribute(&apos;src&apos;, &apos;../ressources/grey.png&apos;);
+  img.setAttribute(&apos;class&apos;, &apos;center-block&apos;);
+  img.setAttribute(&apos;width&apos;, &apos;25px&apos;);
+  img.setAttribute(&apos;height&apos;, &apos;25px&apos;);
+  cell.appendChild(img);
+}
+
+/**
+* The next function test if a documentation exist for the Project.
+* If a Documentation exist the function create an image with link to the documentation for the project.
+* @param {HtmlObject} cell - It&apos;s the cellule of the html tab where the function set the image.
+* @param {Object} project - It&apos;s the Object he represent the project. This object have the information about the documentation of the project.
+*/
+export function getImageDocumentation(cell, project)
+{
+  var xhr3 = new XMLHttpRequest();
+
+  xhr3.onreadystatechange = function() {
+    if (xhr3.readyState === 4) {
+
+      var img = document.createElement(&apos;img&apos;);
+      var linkA = document.createElement(&apos;a&apos;);
+
+      if (xhr3.status === 200) {
+
+        var XMLText = stringToXml(xhr3.responseText);
+        /*window.myArray = XMLText.querySelectorAll(&apos;a&apos;);//what ?*/
+        img.setAttribute(&quot;class&quot;, &quot;center-block&quot;);
+        img.setAttribute(&quot;src&quot;, &quot;../ressources/file.svg&quot;);
+        img.setAttribute(&quot;width&quot;, &quot;25px&quot;);
+        img.setAttribute(&quot;height&quot;, &quot;25px&quot;);
+        linkA.setAttribute(&quot;href&quot;, urlDoc);
+        linkA.appendChild(img);
+        project.documentation = urlDoc;
+        cell.appendChild(linkA);
+      }
+      else if (xhr3.status === 404) {
+
+        img.setAttribute(&quot;class&quot;, &quot;center-block&quot;);
+        img.setAttribute(&quot;src&quot;, &quot;../ressources/RedX.ico&quot;);
+        img.setAttribute(&quot;width&quot;, &quot;25px&quot;);
+        img.setAttribute(&quot;height&quot;, &quot;25px&quot;);
+        cell.appendChild(img);
+      }
+
+    }
+  };
+
+  var urlDoc = window.addrServer + &quot;jenkins/job/&quot;;
+  urlDoc += project.fullNameProject + &apos;/doxygen/&apos;;
+
+  xhr3.withCredentials = true;
+  xhr3.open(&quot;GET&quot;, urlDoc);
+  xhr3.send();
+}
+
+/**
+* The next function test if a Repository or/and SonarQube exist for the Project.
+* If repository or/and SonarQube exist the function create an image for each of them with the link for go to the page.
+* @param {HtmlObject} cell - It&apos;s the cellule of the html tab where the function set the image.
+* @param {HtmlObject} cellSonar - It&apos;s the cellule of the html tab where the function set the image and the link if a SonarQube exist for the current project.
+* @param {Object} project - It&apos;s the Object he represent the project. This object have the information about the SonarQube of the project.
+*/
+export function getRepository(project, cell, cellSonar) {
+
+  var xhr4 = new XMLHttpRequest();
+
+  if (project.numberBuild != null)
+    {
+      var urlBuildProject = window.addrServer + &quot;jenkins/job/&quot;;
+      urlBuildProject += project.fullNameProject + &quot;/&quot; + project.numberBuild + &quot;/api/xml&quot;;
+      xhr4.withCredentials = true;
+      xhr4.open(&quot;GET&quot;, urlBuildProject);
+      xhr4.send();
+    }
+
+    xhr4.onreadystatechange = function() {
+      if (xhr4.readyState === 4) {
+        if (xhr4.status === 200) {
+
+          var typeRepo = xhr4.responseXML.querySelector(&quot;kind&quot;);
+          var imgA = document.createElement(&apos;img&apos;);
+          var imgB = document.createElement(&apos;img&apos;);
+          var linkA = document.createElement(&apos;a&apos;);
+          var linkB = document.createElement(&apos;a&apos;);
+          if (typeRepo != null)
+            {
+              var urlRepo;
+              if (typeRepo.textContent == &quot;svn&quot;)
+                urlRepo = xhr4.responseXML.querySelector(&quot;module&quot;);
+              else if (typeRepo.textContent == &quot;git&quot;)
+                urlRepo = xhr4.responseXML.querySelector(&quot;remoteUrl&quot;);
+              if (urlRepo != null)
+                {
+                  if (typeRepo.textContent == &quot;svn&quot;)
+                    imgA.setAttribute(&quot;src&quot;, &quot;../ressources/svn.png&quot;);
+                  else if (typeRepo.textContent == &quot;git&quot;)
+                    imgA.setAttribute(&quot;src&quot;, &quot;../ressources/github-logo.svg&quot;);
+                  imgA.setAttribute(&quot;class&quot;, &quot;center-block&quot;);
+                  imgA.setAttribute(&quot;width&quot;, &quot;25px&quot;);
+                  imgA.setAttribute(&quot;height&quot;, &quot;25px&quot;);
+                  linkA.setAttribute(&quot;href&quot;, urlRepo.textContent.substr(0, (urlRepo.textContent.length - 4)));
+                  linkA.appendChild(imgA);
+                  cell.appendChild(linkA);
+                }
+            }
+          sonarResult = xhr4.responseXML.querySelector(&quot;sonarqubeDashboardUrl&quot;);
+          if (sonarResult != null)
+            {
+              imgB.setAttribute(&quot;src&quot;, &quot;../ressources/SonarQube.png&quot;);
+              imgB.setAttribute(&quot;class&quot;, &quot;center-block&quot;);
+              imgB.setAttribute(&quot;width&quot;, &quot;25px&quot;);
+              imgB.setAttribute(&quot;height&quot;, &quot;25px&quot;);
+              linkB.setAttribute(&quot;href&quot;, sonarResult.textContent);
+              linkB.appendChild(imgB);
+              cellSonar.appendChild(linkB);
+            }
+        }
+      }
+    };
+  }
+
+
+/**
+* This function get the number of the build for a project
+* @param {XMLHttpRequest} xhr - The xhr variable is the variable where the data receive by the XMLHttpRequest is save.
+*/
+export function getNumberBuild(xhr) {
+
+  var number = xhr.responseXML.querySelector(&quot;number&quot;) !== null;
+  if (number == true)
+    {
+      var number = xhr.responseXML.querySelector(&quot;number&quot;).textContent;
+      return (number);
+    }
+}
+
+/**
+* This function get the Test result page for a project if the Tests result page exist.
+* If a Page with the result of test exist the function create an image with the link of the page for the project.
+* @param {HtmlObject} cell - It&apos;s the cellule of the html tab where the function set the image and the link for acces at the documentation.
+* @param {Object} project - It&apos;s the Object he represent the project. This object have the information about the documentation of the project.
+*/
+export function getTestResult(cell, project) {
+
+  var xhr5 = new XMLHttpRequest();
+
+  var urlTest = window.addrServer + &quot;jenkins/job/&quot;;
+  urlTest += project.fullNameProject + &quot;/&quot; + project.numberBuild + &quot;/testReport/api/xml&quot;;
+  xhr5.withCredentials = true;
+  xhr5.open(&quot;GET&quot;, urlTest);
+  xhr5.send();
+
+  xhr5.onreadystatechange = function() {
+    if (xhr5.readyState === 4) {
+      if (xhr5.status === 200) {
+
+        var baliseImg = document.createElement(&quot;img&quot;);
+        var baliseRef = document.createElement(&quot;a&quot;);
+        baliseImg.setAttribute(&quot;src&quot;, &quot;../ressources/Report.jpg&quot;);
+        baliseImg.setAttribute(&quot;class&quot;, &quot;center-block&quot;);
+        baliseImg.setAttribute(&quot;width&quot;, &quot;25px&quot;);
+        baliseImg.setAttribute(&quot;height&quot;, &quot;25px&quot;);
+        urlTest = urlTest.replace(&quot;/api/xml&quot;, &quot;&quot;);
+        baliseRef.setAttribute(&quot;href&quot;, urlTest);
+        baliseRef.appendChild(baliseImg);
+        cell.appendChild(baliseRef);
+      }
+    }
+  };
+}
+
+/**
+* The function stringToXml convert a text document in XML document.
+* @param {String} textToParse - This argument is the text you want transform in XML document.
+*/
+export function stringToXml(textToParse) {
+    return (new DOMParser()).parseFromString(textToParse, &quot;text/xml&quot;);
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">js/neededLogPage.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowlCategory">rowlCategory</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-rowlProject">rowlProject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fillTab">fillTab</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-changeInHoverClass">changeInHoverClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getImageDocumentation">getImageDocumentation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getNumberBuild">getNumberBuild</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRepository">getRepository</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getTestResult">getTestResult</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gethealthMain">gethealthMain</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setImageBuildResult">setImageBuildResult</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setImageHealth">setImageHealth</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-stringToXml">stringToXml</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">js/neededLogPage.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/*
+** JavaScript File
+** Name : scriptHealth.js
+** Start by: Alban Meurice
+** 27/01/2017
+*/
+
+
+var xhrInit = new XMLHttpRequest();
+
+xhrInit.open(&quot;GET&quot;, &quot;../ressources/configFile.xml&quot;)
+xhrInit.send();
+
+xhrInit.onreadystatechange = function() {
+  if (xhrInit.readyState === 4) {
+    if (xhrInit.status === 200) {
+
+      window.addrServer = xhrInit.responseXML.querySelector(&quot;Server&quot;).textContent;
+
+    }
+  }
+};
+
+window.onload = function() {
+
+  var elemParent = document.getElementById(&quot;informationArea&quot;);
+  var newElem = document.createElement(&quot;h4&quot;);
+
+  newElem.innerHTML = &quot;For access to the website you need to log in at &quot; + window.addrServer;
+  newElem.setAttribute(&quot;class&quot;, &quot;text-center&quot;);
+  elemParent.insertBefore(newElem, elemParent.firstChild);
+
+}
+
+function connectionIsOk() {
+
+  var xhrPing = new XMLHttpRequest();
+  xhrPing.withCredentials = true;
+  var check = 0;
+
+  xhrPing.onreadystatechange = function() {
+    if (xhrPing.readyState === 4) {
+      if (xhrPing.status === 200) {
+
+        window.location = &quot;../html/main_page.html&quot;;
+
+      }
+      else if (xhrPing.status === 403)
+        {
+
+          var elem = document.getElementById(&quot;informationArea&quot;);
+          elem.firstChild.innerHTML = &quot;You don&apos;t have access to the &quot; + window.addrServer + &quot;server.&quot;;
+          elem.firstChild.innerHTML += &quot;\nMaybe you are not connected to CAS or you need to reconnect.&quot;
+
+        }
+      else
+      {
+
+        var elem = document.getElementById(&quot;informationArea&quot;);
+        elem.firstChild.innerHTML = &quot;It&apos;s impossible to join the server&quot;;
+
+      }
+    }
+  };
+
+  xhrPing.open(&quot;GET&quot;, window.addrServer + &quot;jenkins/&quot;);
+  xhrPing.send();
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -6,11 +6,12 @@
 */
 
 
-/*
-** The function getHealthMain get the score and the description of health for a project.
+/**
+* The function getHealthMain get the score and the description of health for a project.
+* @param {XMLHttpRequest} xhr - The XMLHttpRequest where the data is stock.
+* @param {Object} project - The Project who receive the information about score and description.
 */
-
-function gethealthMain(xhr, project) {
+/*export */function gethealthMain(xhr, project) {
 
   var healthInfo = xhr.responseXML.querySelectorAll("score") !== null;
   if (healthInfo == true)
@@ -32,12 +33,13 @@ function gethealthMain(xhr, project) {
     }
 }
 
-/*
-** The function setImageHealth get the state of health for a project and
-** she create an insert an image for illustrate the state of health of project.
+/**
+* The function setImageHealth get the state of health for a project and
+* she create an insert an image for illustrate the state of health of project.
+* @param {HtmlObject} cell - It's the cellule of the html tab where the function set the image.
+* @param {Object} project - It's the Object he represent the project. This object have the information about the health of the project.
 */
-
-function setImageHealth(cell, project)
+/*export*/ function setImageHealth(cell, project)
 {
   var img = document.createElement('img');
 
@@ -66,11 +68,12 @@ function setImageHealth(cell, project)
   cell.appendChild(createDescriptHealth(project, img.src));
 }
 
-/*
-** The next Function set a image with different color in terms of the status of build.
+/**
+* The next Function set a image with different color in terms of the status of build.
+* @param {HtmlObject} cell - It's the cellule of the html tab where the function set the image.
+* @param {Object} project - It's the Object he represent the project. This object have the information about the build result of the project.
 */
-
-function setImageBuildResult(cell, project)
+/*export*/ function setImageBuildResult(cell, project)
 {
   var img = document.createElement('img');
   if (project.color == "blue")
@@ -85,12 +88,13 @@ function setImageBuildResult(cell, project)
   cell.appendChild(img);
 }
 
-/*
-** The next function test if a documentation exist for the Project.
-** If a Documentation exist the function create an image with link to the documentation for the project.
+/**
+* The next function test if a documentation exist for the Project.
+* If a Documentation exist the function create an image with link to the documentation for the project.
+* @param {HtmlObject} cell - It's the cellule of the html tab where the function set the image.
+* @param {Object} project - It's the Object he represent the project. This object have the information about the documentation of the project.
 */
-
-function getImageDocumentation(cell, project)
+/*export*/ function getImageDocumentation(cell, project)
 {
   var xhr3 = new XMLHttpRequest();
 
@@ -103,7 +107,7 @@ function getImageDocumentation(cell, project)
       if (xhr3.status === 200) {
 
         var XMLText = stringToXml(xhr3.responseText);
-        window.myArray = XMLText.querySelectorAll('a');//what ?
+        /*window.myArray = XMLText.querySelectorAll('a');//what ?*/
         img.setAttribute("class", "center-block");
         img.setAttribute("src", "../ressources/file.svg");
         img.setAttribute("width", "25px");
@@ -133,12 +137,14 @@ function getImageDocumentation(cell, project)
   xhr3.send();
 }
 
-/*
-** The next function test if a Repository or/and SonarQube exist for the Project.
-** If repository or/and SonarQube exist the function create an image for each of them with the link for go to the page.
+/**
+* The next function test if a Repository or/and SonarQube exist for the Project.
+* If repository or/and SonarQube exist the function create an image for each of them with the link for go to the page.
+* @param {HtmlObject} cell - It's the cellule of the html tab where the function set the image.
+* @param {HtmlObject} cellSonar - It's the cellule of the html tab where the function set the image and the link if a SonarQube exist for the current project.
+* @param {Object} project - It's the Object he represent the project. This object have the information about the SonarQube of the project.
 */
-
-function getRepository(project, cell, cellSonar) {
+/*export*/ function getRepository(project, cell, cellSonar) {
 
   var xhr4 = new XMLHttpRequest();
 
@@ -176,7 +182,7 @@ function getRepository(project, cell, cellSonar) {
                   imgA.setAttribute("class", "center-block");
                   imgA.setAttribute("width", "25px");
                   imgA.setAttribute("height", "25px");
-                  linkA.setAttribute("href", urlRepo.textContent);
+                  linkA.setAttribute("href", urlRepo.textContent.substr(0, (urlRepo.textContent.length - 4)));
                   linkA.appendChild(imgA);
                   cell.appendChild(linkA);
                 }
@@ -198,12 +204,11 @@ function getRepository(project, cell, cellSonar) {
   }
 
 
-/*
-** This function get the number of the build for a project
+/**
+* This function get the number of the build for a project
+* @param {XMLHttpRequest} xhr - The xhr variable is the variable where the data receive by the XMLHttpRequest is save.
 */
-
-
-function getNumberBuild(xhr) {
+/*export*/ function getNumberBuild(xhr) {
 
   var number = xhr.responseXML.querySelector("number") !== null;
   if (number == true)
@@ -213,12 +218,13 @@ function getNumberBuild(xhr) {
     }
 }
 
-/*
-** This function get the Test result page for a project if the Tests result page exist.
-** If a Page with the result of test exist the function create an image with the link of the page for the project.
+/**
+* This function get the Test result page for a project if the Tests result page exist.
+* If a Page with the result of test exist the function create an image with the link of the page for the project.
+* @param {HtmlObject} cell - It's the cellule of the html tab where the function set the image and the link for acces at the documentation.
+* @param {Object} project - It's the Object he represent the project. This object have the information about the documentation of the project.
 */
-
-function getTestResult(cell, project) {
+/*export*/ function getTestResult(cell, project) {
 
   var xhr5 = new XMLHttpRequest();
 
@@ -247,10 +253,10 @@ function getTestResult(cell, project) {
   };
 }
 
-/*
-** The function stringToXml convert a text document in XML document.
+/**
+* The function stringToXml convert a text document in XML document.
+* @param {String} textToParse - This argument is the text you want transform in XML document.
 */
-
-function stringToXml(textToParse) {
+/*export*/ function stringToXml(textToParse) {
     return (new DOMParser()).parseFromString(textToParse, "text/xml");
 }

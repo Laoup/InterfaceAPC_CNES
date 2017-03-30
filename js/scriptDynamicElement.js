@@ -5,11 +5,11 @@
 ** 02/03/2017
 */
 
-/*
-** The three next function manage the div who appear when the mouse in on weather icon.
+/**
+* The three next function manage the div who appear when the mouse in on weather icon.
+*
 */
-
-function changeInHoverClass(balise) {
+export function changeInHoverClass(balise) {
 
   balise.setAttribute("class", "center-block healthReportHover");
   return (true);
@@ -21,6 +21,12 @@ function changeInHideClass(balise) {
   return (true);
 }
 
+/**
+* This Function is call by the function setImageHealth for create a table with information about the health of project and his build information.
+* This table is only visible when the mouse is above the icone in the column health.
+* @param {Object} project - It's the Object he represent the project. This object have the information about the health and the build stability of the project.
+* 
+*/
 function createDescriptHealth(project, img_src) {
 
   var hiddenDiv = document.createElement('div');
